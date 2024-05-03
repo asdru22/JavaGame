@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int FPS = 60;
 
     Thread gameThread;
-    KeyHandler keyHandler = new KeyHandler();
+    InputHandler inputHandler = new InputHandler();
     ArrayList<Entity> entities = new ArrayList<>();
 
     public GamePanel() {
@@ -30,7 +30,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.setBackground(Color.CYAN);
         this.setDoubleBuffered(true);
         this.setFocusable(true);
-        this.addKeyListener(keyHandler);
+        this.addKeyListener(inputHandler.keyHandler);
+        this.addMouseMotionListener(inputHandler.mouseHandler);
 
         populate();
     }
@@ -92,7 +93,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private void populate(){
-        entities.add(new Player(this,keyHandler,new Vector2D(100,100)));
+        entities.add(new Player(this,inputHandler.keyHandler,new Vector2D(100,100)));
         entities.add(new Enemy(this,new Vector2D(100,200)));
     }
 }

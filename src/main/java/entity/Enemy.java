@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Enemy extends MovableEntity {
 
     public Enemy(GamePanel gamePanel, Vector2D pos) {
-        super(pos, gamePanel,2);
+        super(pos, gamePanel, 2);
         setTexture("enemy");
     }
 
