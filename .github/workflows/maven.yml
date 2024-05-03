@@ -34,7 +34,7 @@ jobs:
           cache: maven
 
       - name: build project with github actions
-        run:
+        run: |
           mvn -B package --file pom.xml
           mkdir staging && cp target/*.jar staging
 
