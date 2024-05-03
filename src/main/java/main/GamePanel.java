@@ -23,8 +23,8 @@ public class GamePanel extends JPanel implements Runnable {
     final int FPS = 60;
 
     Thread gameThread;
-    InputHandler inputHandler = new InputHandler();
-    ArrayList<Entity> entities = new ArrayList<>();
+    public InputHandler inputHandler = new InputHandler();
+    public ArrayList<Entity> entities = new ArrayList<>();
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -79,14 +79,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         for(Entity e : entities){
-            e.update(entities);
-        }
-        Vector2D mousePos = inputHandler.getMousePos();
-        if(inputHandler.isLeftPressed()){
-            System.out.println("left pressed");
+            e.update();
         }
     }
 
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
@@ -99,7 +96,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private void populate(){
-        entities.add(new Player(this,inputHandler.keyHandler,new Vector2D(100,100)));
+        addEntity(new Player(this,inputHandler.keyHandler,new Vector2D(100,100)));
+        addEntity(new Enemy(this,new Vector2D(400,200)));
     }
 
     public void addEntity(Entity e){

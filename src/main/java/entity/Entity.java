@@ -16,15 +16,22 @@ public abstract class Entity {
     public GamePanel gamePanel;
     public BufferedImage texture;
 
-    Entity(Vector2D pos, GamePanel gamePanel) {
+    Entity(Vector2D pos, GamePanel gamePanel, String texturePath) {
         this.pos = pos;
+        this.gamePanel = gamePanel;
+        setTexture(texturePath);
+    }
+
+    Entity(Vector2D pos, Vector2D size, GamePanel gamePanel) {
+        this.pos = pos;
+        this.size = size;
         this.gamePanel = gamePanel;
     }
 
-    public abstract void update(ArrayList<Entity> entities);
+    public abstract void update();
 
     public void draw(Graphics2D g2D) {
-        g2D.drawImage(texture, (int) pos.x, (int) pos.y, (int)size.x,(int)size.y, null);
+        g2D.drawImage(texture, (int) pos.x, (int) pos.y, (int) size.x, (int) size.y, null);
     }
 
     public void setTexture(String texturePath) {
@@ -43,4 +50,27 @@ public abstract class Entity {
         double dy = pos.y - other.pos.y;
         return Math.sqrt(dx * dx + dy * dy);
     }
+
+    public boolean contains(Vector2D point) {
+        return point.x >= pos.x && point.x <= pos.x + size.x && point.y >= pos.y && point.y <= pos.y + size.y;
+    }
+
+    public boolean intersects(Entity e) {
+        double tw = size.x, th = size.y, rw = e.size.x, rh = e.size.y;
+        if (rw <= 0 || rh <= 0 || tw <= 0 || th <= 0) {
+            return false;
+        }
+        double tx = this.pos.x, ty = this.pos.y, rx = e.pos.x, ry = e.pos.y;
+        rw += rx;
+        rh += ry;
+        tw += tx;
+        th += ty;
+        //      overflow || intersect
+        return ((rw < rx || rw > tx) &&
+                (rh < ry || rh > ty) &&
+                (tw < tx || tw > rx) &&
+                (th < ty || th > ry));
+    }
+
+    public abstract void onLeftClick();
 }
