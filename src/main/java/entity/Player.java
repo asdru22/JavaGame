@@ -1,7 +1,7 @@
 package entity;
 
 import main.GamePanel;
-import main.KeyHandler;
+import io.KeyHandler;
 import utils.Vector2D;
 
 import java.util.ArrayList;
@@ -13,6 +13,7 @@ public class Player extends MovableEntity {
         super(pos, gamePanel, 4);
         this.keyHandler = keyHandler;
         setTexture("player");
+
     }
 
     @Override

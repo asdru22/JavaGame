@@ -5,7 +5,7 @@ import utils.Vector2D;
 
 public abstract class MovableEntity extends Entity {
     public int speed;
-    public Vector2D velocity = new Vector2D(0, 0);
+    public Vector2D velocity = new Vector2D();
 
     MovableEntity(Vector2D pos, GamePanel gamePanel, int speed) {
         super(pos, gamePanel);
@@ -15,7 +15,6 @@ public abstract class MovableEntity extends Entity {
     public void moveTowards(Entity target) {
         double distance = getDistanceFrom(target);
         if (distance >= 5) {
-
             // Calculate the direction vector towards the target entity
             Vector2D direction = new Vector2D(target.pos.x - pos.x, target.pos.y - pos.y);
             direction.normalize();
@@ -26,7 +25,7 @@ public abstract class MovableEntity extends Entity {
             pos.x += velocity.x;
             pos.y += velocity.y;
         } else {
-            this.velocity = new Vector2D(0, 0);
+            this.velocity = new Vector2D();
         }
     }
 }

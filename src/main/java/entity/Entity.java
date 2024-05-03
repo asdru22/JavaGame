@@ -12,6 +12,7 @@ import java.util.Objects;
 
 public abstract class Entity {
     public Vector2D pos;
+    public Vector2D size = new Vector2D();
     public GamePanel gamePanel;
     public BufferedImage texture;
 
@@ -23,12 +24,14 @@ public abstract class Entity {
     public abstract void update(ArrayList<Entity> entities);
 
     public void draw(Graphics2D g2D) {
-        g2D.drawImage(texture, (int) pos.x, (int) pos.y, gamePanel.tileSize, gamePanel.tileSize, null);
+        g2D.drawImage(texture, (int) pos.x, (int) pos.y, (int)size.x,(int)size.y, null);
     }
 
     public void setTexture(String texturePath) {
         try {
             texture = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/assets/" + texturePath + ".png")));
+            size.x = texture.getWidth();
+            size.y = texture.getHeight();
         } catch (IOException e) {
             System.err.println("Image " + texturePath + " doesn't exist");
             throw new RuntimeException(e);

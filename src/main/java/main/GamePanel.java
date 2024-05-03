@@ -3,6 +3,7 @@ package main;
 import entity.Enemy;
 import entity.Entity;
 import entity.Player;
+import io.InputHandler;
 import utils.Vector2D;
 
 import javax.swing.JPanel;
@@ -10,7 +11,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {
-    // SCREEN SETTINGS
+    // Screen settings
     final int originalTileSize = 16;
     final int scale = 3;
     // 48x48 tile
@@ -31,7 +32,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.setFocusable(true);
         this.addKeyListener(inputHandler.keyHandler);
-        this.addMouseMotionListener(inputHandler.mouseHandler);
+        this.addMouseMotionListener(inputHandler.mousePosHandler);
+        this.addMouseListener(inputHandler.mouseListenerHandler);
 
         populate();
     }
@@ -79,6 +81,10 @@ public class GamePanel extends JPanel implements Runnable {
         for(Entity e : entities){
             e.update(entities);
         }
+        Vector2D mousePos = inputHandler.getMousePos();
+        if(inputHandler.isLeftPressed()){
+            System.out.println("left pressed");
+        }
     }
 
     public void paintComponent(Graphics g) {
@@ -94,6 +100,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     private void populate(){
         entities.add(new Player(this,inputHandler.keyHandler,new Vector2D(100,100)));
-        entities.add(new Enemy(this,new Vector2D(100,200)));
+    }
+
+    public void addEntity(Entity e){
+        entities.add(e);
     }
 }
