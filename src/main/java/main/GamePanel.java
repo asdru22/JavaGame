@@ -10,13 +10,13 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {
-    // screen settings
-    final int originalTileSize = 16; // 16x16 tile
+    // SCREEN SETTINGS
+    final int originalTileSize = 16;
     final int scale = 3;
-    public final int tileSize = originalTileSize * scale; // 48x48 tile
+    // 48x48 tile
+    public final int tileSize = originalTileSize * scale;
     // 4x3 screen ratio
-    final int screenColumns = 16;
-    final int screenRows = 12;
+    final int screenColumns = 16, screenRows = 12;
     final int screenWidth = tileSize * screenColumns;
     final int screenHeight = tileSize * screenRows;
     final int FPS = 60;
@@ -43,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-
+        // FPS implementation
         double drawInterval = 10e8 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
