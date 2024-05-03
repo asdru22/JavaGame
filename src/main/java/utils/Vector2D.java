@@ -1,5 +1,9 @@
 package utils;
 
+import main.GamePanel;
+
+import java.util.Random;
+
 public class Vector2D {
     public double x;
     public double y;
@@ -11,6 +15,11 @@ public class Vector2D {
     public Vector2D(double x, double y) {
         this.x = x;
         this.y = y;
+    }
+
+    public Vector2D(Vector2D vec) {
+        this.x = vec.x;
+        this.y = vec.y;
     }
 
     public static Vector2D calculateDirection(boolean north, boolean south, boolean west, boolean east) {
@@ -62,5 +71,12 @@ public class Vector2D {
 
     public static double getMagnitude(double x, double y) {
         return Math.sqrt(x * x + y * y);
+    }
+
+    public Vector2D randomize(GamePanel gamePanel){
+        Random random = new Random();
+        this.x = random.nextInt(gamePanel.getWidth() + 1);
+        this.y = random.nextInt(gamePanel.getWidth() + 1);
+        return this;
     }
 }

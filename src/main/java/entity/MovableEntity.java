@@ -18,9 +18,7 @@ public abstract class MovableEntity extends Entity {
     }
 
     public void moveTowards(Entity target) {
-        double distance = getDistanceFrom(target);
-        System.out.println(distance);
-        if (distance >= 5) {
+        if (!intersects(target)) {
             // Calculate the direction vector towards the target entity
             Vector2D direction = new Vector2D(target.pos.x - pos.x, target.pos.y - pos.y);
             direction.normalize();
@@ -30,10 +28,10 @@ public abstract class MovableEntity extends Entity {
             // Update the position based on the velocity
             pos.x += velocity.x;
             pos.y += velocity.y;
-            System.out.println("velocity: "+velocity.x+", "+velocity.y);
 
         } else {
             this.velocity = new Vector2D();
+            onCollision(target);
         }
     }
 }

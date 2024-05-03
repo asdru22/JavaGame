@@ -1,14 +1,14 @@
 package main;
 
 import entity.Enemy;
-import entity.Entity;
-import entity.Player;
+
+import entity.SceneEntities;
 import io.InputHandler;
 import utils.Vector2D;
 
 import javax.swing.JPanel;
 import java.awt.*;
-import java.util.ArrayList;
+
 
 public class GamePanel extends JPanel implements Runnable {
     // Screen settings
@@ -24,7 +24,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     Thread gameThread;
     public InputHandler inputHandler = new InputHandler();
-    public ArrayList<Entity> entities = new ArrayList<>();
+
+    public SceneEntities sceneEntities;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -34,6 +35,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(inputHandler.keyHandler);
         this.addMouseMotionListener(inputHandler.mousePosHandler);
         this.addMouseListener(inputHandler.mouseListenerHandler);
+
+        this.sceneEntities = new SceneEntities(this);
 
         populate();
     }
@@ -61,10 +64,7 @@ public class GamePanel extends JPanel implements Runnable {
             lastTime = currentTime;
 
             if (delta >= 1) {
-                // update information
-                update();
-                // draw the screen with updated information
-                repaint();
+                mainLoop();
                 delta--;
                 drawCount++;
             }
@@ -78,29 +78,38 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        for(Entity e : entities){
-            e.update();
-        }
+        sceneEntities.update();
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
-
-        for(Entity e : entities){
-            e.draw(g2D);
-        }
-
+        sceneEntities.draw(g2D);
         g2D.dispose();
     }
-
+    public void mainLoop(){
+        // update information
+        update();
+        // draw the screen with updated information
+        repaint();
+    }
     private void populate(){
-        addEntity(new Player(this,inputHandler.keyHandler,new Vector2D(100,100)));
-        addEntity(new Enemy(this,new Vector2D(400,200)));
+        addEnemy(new Enemy(this,new Vector2D().randomize(this)));
     }
 
-    public void addEntity(Entity e){
-        entities.add(e);
+    public void addEnemy(Enemy e){
+        sceneEntities.enemies.add(e);
+    }
+
+    public int getWidth(){
+        return screenWidth;
+    }
+    public int getHeight(){
+        return screenHeight;
+    }
+
+    public void stopThread() {
+        gameThread.interrupt();
     }
 }
