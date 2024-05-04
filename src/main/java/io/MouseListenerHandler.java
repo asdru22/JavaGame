@@ -19,6 +19,19 @@ public class MouseListenerHandler implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         updatePressedButtons(e, true);
+        Vector2D pos = new Vector2D(e.getX(), e.getY());
+        // make any entity clickable
+        for (PlayableEntity c : gamePanel.game.playerParty[0].characters) {
+            if (c.contains(pos)) {
+                if (e.getButton() == MouseEvent.BUTTON3) c.onRightClick(pos);
+            }
+        }
+        for (PlayableEntity c : gamePanel.game.playerParty[1].characters) {
+            if (c.contains(pos)) {
+                if (e.getButton() == MouseEvent.BUTTON3) c.onRightClick(pos);
+
+            }
+        }
     }
 
     @Override
@@ -29,13 +42,18 @@ public class MouseListenerHandler implements MouseListener {
         for (PlayableEntity c : gamePanel.game.playerParty[0].characters) {
             if (c.contains(pos)) {
                 if (e.getButton() == MouseEvent.BUTTON1) c.onLeftClick(pos);
+                //if (e.getButton() == MouseEvent.BUTTON3) c.onRightClick(pos);
             }
         }
         for (PlayableEntity c : gamePanel.game.playerParty[1].characters) {
             if (c.contains(pos)) {
                 if (e.getButton() == MouseEvent.BUTTON1) c.onLeftClick(pos);
+                //if (e.getButton() == MouseEvent.BUTTON3) c.onRightClick(pos);
+
             }
         }
+
+        if (gamePanel.isPaused()) gamePanel.resume();
     }
 
     @Override
@@ -51,6 +69,5 @@ public class MouseListenerHandler implements MouseListener {
         int code = e.getButton();
         if (code == MouseEvent.BUTTON1) leftPressed = pressed;
         if (code == MouseEvent.BUTTON3) rightPressed = pressed;
-
     }
 }

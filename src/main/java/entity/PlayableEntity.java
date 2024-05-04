@@ -49,6 +49,12 @@ public abstract class PlayableEntity extends MovableEntity {
     }
 
     @Override
+    public void onRightClick(Vector2D pos){
+        gamePanel.pause();
+        gamePanel.information.playable = (Playable) this;
+    }
+
+    @Override
     public void onCollision(Rect r) {
 
     }

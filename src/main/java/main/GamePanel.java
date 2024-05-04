@@ -1,5 +1,6 @@
 package main;
 
+import entity.Information;
 import io.InputHandler;
 
 import javax.swing.*;
@@ -9,17 +10,23 @@ import java.awt.*;
 public class GamePanel extends JPanel implements Runnable {
     // Screen settings
     final int originalTileSize = 16;
-    final int scale = 3;
-    // 48x48 tile
+    final int scale = 3; // 48x48 tile
     public final int tileSize = originalTileSize * scale;
-    // 4x3 screen ratio
-    final int screenColumns = 16, screenRows = 12;
+    final int screenColumns = 16, screenRows = 12; // 4x3 screen ratio
     final int screenWidth = tileSize * screenColumns;
     final int screenHeight = tileSize * screenRows;
     final int TARGET_FPS = 60;
     private int FPS = TARGET_FPS;
-    Thread gameThread;
+
+    // Game state
+    public int gameState;
+    final int playState = 1;
+    final int pauseState = 2;
+
+    private Thread gameThread;
     public InputHandler inputHandler = new InputHandler();
+    public Information information = new Information();
+
     public Game game = new Game(this);
 
     public GamePanel() {
@@ -30,6 +37,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(inputHandler.keyHandler);
         this.addMouseMotionListener(inputHandler.mousePosHandler);
         this.addMouseListener(inputHandler.mouseListenerHandler);
+
+        gameState = playState;
     }
 
     public void startGameThread() {
@@ -54,7 +63,7 @@ public class GamePanel extends JPanel implements Runnable {
             timer += (currentTime - lastTime);
             lastTime = currentTime;
 
-            if (delta >= 1 ) {
+            if (delta >= 1) {
                 mainLoop();
                 delta--;
                 drawCount++;
@@ -69,7 +78,10 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        game.update();
+        if (gameState == playState) {
+            game.update();
+        } else if (gameState == pauseState) {
+        }
     }
 
     @Override
@@ -77,9 +89,9 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
         game.draw(g2D);
-        g2D.drawString("FPS: "+FPS,0,10);
-        g2D.drawString("Turn: "+game.turn,screenWidth/2,screenHeight/2-100);
-
+        g2D.drawString("FPS: " + FPS, 0, 10);
+        g2D.drawString("Turn: " + game.turn, screenWidth / 2, screenHeight / 2 - 100);
+        information.draw(g2D);
         g2D.dispose();
     }
 
@@ -96,6 +108,17 @@ public class GamePanel extends JPanel implements Runnable {
 
     public int getHeight() {
         return screenHeight;
+    }
+
+    public void pause(){
+        gameState = pauseState;
+    }
+    public void resume(){
+        gameState = playState;
+    }
+
+    public boolean isPaused(){
+        return gameState == pauseState;
     }
 
 

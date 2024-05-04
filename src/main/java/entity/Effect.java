@@ -1,6 +1,8 @@
 package entity;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Effect {
     public int duration;
@@ -17,13 +19,13 @@ public abstract class Effect {
 
     public abstract void expire();
 
-    public void tick(List<Effect> effects) {
+    public void tick(Iterator<Effect> effect) {
         effect();
         System.out.println(this);
         duration--;
         if (duration == 0) {
             expire();
-            effects.remove(this);
+            effect.remove();
         }
     }
 
@@ -31,4 +33,21 @@ public abstract class Effect {
     public String toString() {
         return getClass().getSimpleName() + " (" + duration + ")";
     }
+
+    public String getName(){
+        return getClass().getSimpleName();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Effect other = (Effect) obj;
+        return Objects.equals(getName(), other.getName());
+    }
+
 }

@@ -47,6 +47,8 @@ public abstract class Entity extends Rect {
     }
 
     public abstract void onLeftClick(Vector2D pos);
+    public abstract void onRightClick(Vector2D pos);
+
 
     public boolean isAlive(){
         return alive;

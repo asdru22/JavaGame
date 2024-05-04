@@ -6,9 +6,13 @@ import entity.effects.Resistance;
 import main.GamePanel;
 
 public class Assassin extends Playable {
+
     public Assassin(GamePanel gamePanel) {
         super(gamePanel, "assassin", new Stats(
                 100, 90, 0));
+
+        active = "Punch";
+        passive = "Shield";
     }
 
     @Override
@@ -20,4 +24,6 @@ public class Assassin extends Playable {
     public void passive(Playable target) {
         applyEffect(new Resistance(target, 2, 10));
     }
+
+
 }

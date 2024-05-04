@@ -12,4 +12,10 @@ public class Stats {
         this.damage = damage;
         this.defense = defense;
     }
+    public String getHealth(){
+        return "Health: "+health+"/"+maxHealth;
+    }
+    public String getOthers(){
+        return "Damage: "+damage+", Defense: "+ defense;
+    }
 }

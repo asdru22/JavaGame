@@ -5,6 +5,7 @@ import main.GamePanel;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class EntityStatsHandler extends PlayableEntity {
 
@@ -19,7 +20,7 @@ public abstract class EntityStatsHandler extends PlayableEntity {
     }
 
     public void receiveDamage(int damage) {
-        damage = Math.min(0, damage - stats.defense);
+        damage = Math.max(0, damage - stats.defense);
         stats.health -= damage;
         if (stats.health <= 0) {
             onDeath();
@@ -41,11 +42,41 @@ public abstract class EntityStatsHandler extends PlayableEntity {
     }
 
     public static void applyEffect(Effect e) {
-        e.owner.getEffects().add(e);
+        Playable o = e.owner;
+        if(o.hasEffect(e)) o.removeEffect(e);
+        o.getEffects().add(e);
+    }
+
+    public void removeEffect(Effect e){
+        Effect effect;
+        Iterator<Effect> iterator = activeEffects.iterator();
+        while (iterator.hasNext()) {
+            effect = iterator.next();
+            if(Objects.equals(e,effect)){
+                iterator.remove();
+                System.out.println("effect removed");
+            }
+        }
+    }
+
+    public boolean hasEffect(Effect e){
+        List<Effect> effects = e.owner.getEffects();
+        for(Effect effect : effects){
+            if(Objects.equals(effect.getName(), e.getName())) return true;
+        }
+        return false;
     }
 
     public List<Effect> getEffects() {
         return activeEffects;
+    }
+
+    public String effectsToString() {
+        StringBuilder r = new StringBuilder("Effects:\n");
+        for(Effect e : activeEffects){
+            r.append(e).append("\n");
+        }
+        return r.toString();
     }
 
     public void effectTick() {
@@ -53,7 +84,7 @@ public abstract class EntityStatsHandler extends PlayableEntity {
         Iterator<Effect> iterator = activeEffects.iterator();
         while (iterator.hasNext()) {
             e = iterator.next();
-            e.tick(activeEffects);
+            e.tick(iterator);
         }
     }
 }
