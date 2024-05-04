@@ -5,11 +5,13 @@ import entity.PlayerParty;
 import utils.Vector2D;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Game {
     public PlayerParty[] playerParty = new PlayerParty[2];
-    public int turn = 0;
+    public int turn;
     private final GamePanel gamePanel;
+    public int winner = -1;
 
     public Game(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -27,6 +29,7 @@ public class Game {
     }
 
     private void populate() {
+
         Vector2D screenCenter = new Vector2D((double) gamePanel.getWidth() / 2, (double) gamePanel.getHeight() / 2);
         PlayableEntity p1 = PlayableEntity.getCharacter(PlayableEntity.Characters.ASSASSIN, gamePanel);
         PlayableEntity p2 = PlayableEntity.getCharacter(PlayableEntity.Characters.WIZARD, gamePanel);
@@ -41,6 +44,11 @@ public class Game {
         playerParty[1].addCharacter(p3);
 
         playerParty[1].initialize(this);
+
+        // 50% chance for each party to start
+
+        turn = new Random().nextInt(2);
+        playerParty[turn].startTurn();
     }
 
     public PlayerParty getActiveParty(){
@@ -49,5 +57,6 @@ public class Game {
 
     public void nextTurn(){
         turn = (turn + 1) % 2;
+        playerParty[turn].startTurn();
     }
 }

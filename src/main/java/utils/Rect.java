@@ -5,12 +5,12 @@ import java.awt.*;
 public abstract class Rect {
     public Vector2D pos;
     public Vector2D size = new Vector2D();
-    public Vector2D center;
+    public Vector2D center = new Vector2D();
     public boolean render = true;
 
     public Rect(Vector2D pos) {
         this.pos = pos;
-        this.center = new Vector2D(pos.x + size.x / 2, pos.y + size.y / 2);
+        updateCenter();
     }
 
     public Rect(Vector2D pos, Vector2D size) {
@@ -54,4 +54,9 @@ public abstract class Rect {
     }
 
     public abstract void onCollision(Rect r);
+
+    public void updateCenter() {
+        center.x = (pos.x + size.x) / 2;
+        center.y = (pos.y + size.y) / 2;
+    }
 }

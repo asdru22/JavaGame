@@ -60,7 +60,7 @@ public class GamePanel extends JPanel implements Runnable {
             timer += (currentTime - lastTime);
             lastTime = currentTime;
 
-            if (delta >= 1) {
+            if (delta >= 1 && game.winner==-1) {
                 mainLoop();
                 delta--;
                 drawCount++;

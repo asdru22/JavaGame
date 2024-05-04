@@ -6,16 +6,14 @@ import main.GamePanel;
 import utils.Rect;
 import utils.Vector2D;
 
-import javax.swing.*;
 import java.awt.*;
 
 
 public abstract class PlayableEntity extends MovableEntity {
 
     Vector2D originalPosition = null;
-    boolean isOwnTurn = false;
+    public boolean isOwnTurn = false;
     PlayerParty party = null;
-    private JLabel healthbar = new JLabel("hello exy");
     private String name;
 
     public PlayableEntity(PlayableEntity playableEntity, String pathName, Stats stats) {
@@ -23,7 +21,7 @@ public abstract class PlayableEntity extends MovableEntity {
         this.gamePanel = playableEntity.gamePanel;
         this.pos = new Vector2D(playableEntity.pos);
         this.name = pathName;
-        gamePanel.add(healthbar);
+
     }
 
     public PlayableEntity(GamePanel gamePanel, String pathName, Stats stats) {
@@ -38,7 +36,6 @@ public abstract class PlayableEntity extends MovableEntity {
 
     @Override
     public void update() {
-        healthbar.setText("Health: " + stats.health);
     }
 
     @Override
@@ -74,11 +71,27 @@ public abstract class PlayableEntity extends MovableEntity {
     @Override
     public void draw(Graphics2D g2D) {
         g2D.drawImage(texture, (int) pos.x, (int) pos.y, (int) size.x, (int) size.y, null);
-        g2D.drawString("Health: " + stats.health, (int) pos.x, (int) (pos.y - 10));
-
+        drawCenteredString(g2D,("Health: "+stats.health),-40);
+        if(isOwnTurn) drawCenteredString(g2D,("----"),25);
     }
 
     public abstract void active(PlayableEntity target);
 
     public abstract void passive(PlayableEntity target);
+
+    private void drawCenteredString(Graphics2D g2D, String text,int verticalOffset) {
+        if (text == null || text.isEmpty()) {
+            return;
+        }
+
+        FontMetrics fm = g2D.getFontMetrics();
+
+        int stringWidth = fm.stringWidth(text);
+        int stringHeight = fm.getAscent();
+
+        int x = (int) (pos.x + (size.x - stringWidth) / 2);
+        int y = (int) (pos.y + (size.y - stringHeight) / 2 + stringHeight)+ verticalOffset;
+
+        g2D.drawString(text, x, y);
+    }
 }

@@ -10,13 +10,11 @@ import java.util.List;
 public class PlayerParty {
 
     private static final int MAX_PARTY_SIZE = 4;
-
     public List<PlayableEntity> characters = new ArrayList<>();
     public int turn = 0;
-
     public Game game = null;
-
     public Vector2D pos;
+    boolean isOwnTurn = false;
 
     public PlayerParty(Vector2D pos) {
         this.pos = pos;
@@ -26,10 +24,8 @@ public class PlayerParty {
         if (characters.size() != MAX_PARTY_SIZE) characters.add(e);
     }
 
-
     public void initialize(Game game) {
         this.game = game;
-        characters.get(0).isOwnTurn = true;
 
         Vector2D[] defaultPositions = {
                 new Vector2D(-20, -75),
@@ -50,6 +46,7 @@ public class PlayerParty {
         p.pos.add(offset);
         p.party = this;
         p.originalPosition = new Vector2D(p.pos);
+        p.updateCenter();
     }
 
     public void update() {
@@ -64,32 +61,72 @@ public class PlayerParty {
         }
     }
 
+    public PlayableEntity getActiveCharacter() {
+        return characters.get(turn);
+    }
+
     public void nextTurn() {
-        PlayableEntity c = characters.get(turn);
-        c.isOwnTurn = false;
+        // Old player handling
+        PlayableEntity oldTurn = characters.get(turn);
+        oldTurn.isOwnTurn = false;
+        turnCore();
+    }
 
-        int aliveCharacters = 0;
-        for(PlayableEntity e : characters){
-            if(e.isAlive()) aliveCharacters++;
-        }
-
-        turn++;
-        if (turn < aliveCharacters) {
-            // go to next player if current one is dead
-            if(!c.isAlive()) {
-                c.isOwnTurn = false;
-                nextTurn();
-            } else {
-                c.isOwnTurn = true;
-            }
+    public void startTurn() {
+        isOwnTurn = true;
+        turn = 0;
+        int alive = getAliveCharacters();
+        if (alive == 0) {
+            int w = getOther();
+            game.winner = w;
+            System.out.println("Party " + w + " has won!");
         } else {
-            // If characters turn is over, give control to other characters;
-            game.nextTurn();
-            turn = 0;
+            if (turn < alive) {
+                handleCharacters(alive);
+            } else {
+                game.nextTurn();
+            }
         }
     }
 
-    public PlayableEntity getActiveCharacter() {
-        return characters.get(turn);
+    private void turnCore() {
+        int aliveCharacters = getAliveCharacters();
+        if (aliveCharacters == 0) {
+            int w = getOther();
+            game.winner = w;
+            System.out.println("Party " + w + " has won!");
+        } else {
+            turn++;
+            if (turn < aliveCharacters) {
+                handleCharacters(aliveCharacters);
+            } else {
+                game.nextTurn();
+            }
+        }
+    }
+
+    private void handleCharacters(int alive) {
+        PlayableEntity newTurn;
+        for (int i = 0; i < alive; i++) {
+            newTurn = characters.get(turn);
+            if (newTurn.isAlive()) {
+                newTurn.isOwnTurn = true;
+                System.out.println("Party:" + game.turn + ", character" + turn);
+                break;
+            }
+        }
+    }
+
+    private int getOther() {
+        int n = game.turn;
+        return (n + 1) % 2;
+    }
+
+    public int getAliveCharacters() {
+        int aliveCharacters = 0;
+        for (PlayableEntity e : characters) {
+            if (e.isAlive()) aliveCharacters++;
+        }
+        return aliveCharacters;
     }
 }
