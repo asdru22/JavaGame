@@ -1,33 +1,44 @@
-import javax.imageio.ImageIO;
+// Java Program to add a image and string
+// to a label with horizontal alignment
+
+
 import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
-import java.util.Objects;
 
-public class test extends JPanel {
-    private Image texture;
+class test extends JFrame {
 
-    public test() throws IOException {
-        // Load the texture image
-        texture = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/assets/player.png")));
+    // frame
+    static JFrame f;
+
+    // label to display text
+    static JLabel l;
+
+    // default constructor
+    test() {
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    // main class
+    public static void main(String[] args) {
+        // create a new frame to store text field and button
+        f = new JFrame("label");
 
-        // Draw the texture onto the panel
-        g.drawImage(texture, 100, 100, 200, 200, this); // Draw the texture at position (100, 100) with size 200x200
-    }
+        // create a new image icon
+        ImageIcon i = new ImageIcon("f:/image.png");
 
-    public static void main(String[] args) throws IOException {
-        JFrame frame = new JFrame("Texture Demo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 400);
+        // create a label to display text and image
+        l = new JLabel("new image text ", i, SwingConstants.HORIZONTAL);
 
-        test panel = new test();
-        frame.add(panel);
+        // create a panel
+        JPanel p = new JPanel();
 
-        frame.setVisible(true);
+        // add label to panel
+        p.add(l);
+
+        // add panel to frame
+        f.add(p);
+
+        // set the size of frame
+        f.setSize(600, 500);
+
+        f.show();
     }
 }

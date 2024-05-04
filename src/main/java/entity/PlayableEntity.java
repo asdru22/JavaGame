@@ -1,47 +1,54 @@
 package entity;
 
+import entity.characters.Assassin;
+import entity.characters.Wizard;
 import main.GamePanel;
 import utils.Rect;
 import utils.Vector2D;
 
+import javax.swing.*;
+import java.awt.*;
 
-public class PlayableEntity extends MovableEntity {
+
+public abstract class PlayableEntity extends MovableEntity {
 
     Vector2D originalPosition = null;
     boolean isOwnTurn = false;
     PlayerParty party = null;
-
+    private JLabel healthbar = new JLabel("hello exy");
     private String name;
 
     public PlayableEntity(PlayableEntity playableEntity, String pathName, Stats stats) {
-        super(playableEntity.pos, playableEntity.gamePanel, 4,pathName, stats);
+        super(playableEntity.pos, playableEntity.gamePanel, 4, pathName, stats);
         this.gamePanel = playableEntity.gamePanel;
         this.pos = new Vector2D(playableEntity.pos);
         this.name = pathName;
+        gamePanel.add(healthbar);
     }
 
     public PlayableEntity(GamePanel gamePanel, String pathName, Stats stats) {
-        super(new Vector2D(), gamePanel, 4,pathName, stats);
+        super(new Vector2D(), gamePanel, 4, pathName, stats);
         this.name = pathName;
     }
 
     public PlayableEntity(GamePanel gamePanel, Vector2D pos, String pathName, Stats stats) {
-        super(pos, gamePanel, 4,pathName, stats);
+        super(pos, gamePanel, 4, pathName, stats);
     }
 
 
     @Override
     public void update() {
+        healthbar.setText("Health: " + stats.health);
     }
 
     @Override
     public void onLeftClick(Vector2D pos) {
-        PlayableEntity executor = gamePanel.game.getActiveParty().getActiveCharacter();
-        if(party.party.contains(executor)) System.out.println("passive");
-        else System.out.println("active");
-        //System.out.println("i was clicked by "+gamePanel.game.getActiveParty().getActiveCharacter().getName());
-        //System.out.println("party: "+gamePanel.game.turn+", turn: "+gamePanel.game.getActiveParty().turn);
-        gamePanel.game.getActiveParty().nextTurn();
+        if(isAlive()) {
+            PlayableEntity executor = gamePanel.game.getActiveParty().getActiveCharacter();
+            if (party.characters.contains(executor)) executor.passive(this);
+            else executor.active(this);
+            gamePanel.game.getActiveParty().nextTurn();
+        }
     }
 
     @Override
@@ -49,18 +56,29 @@ public class PlayableEntity extends MovableEntity {
 
     }
 
-    public enum Characters{
-        PLAYER, ENEMY
+    public enum Characters {
+        ASSASSIN, WIZARD
     }
 
-    public static PlayableEntity getCharacter(Characters c,GamePanel gamePanel){
-        if(c==Characters.PLAYER) return new PlayableEntity(gamePanel, "player",new Stats(100,20));
-        if(c==Characters.ENEMY) return new PlayableEntity(gamePanel, "enemy",new Stats(63,4));
+    public static PlayableEntity getCharacter(Characters c, GamePanel gamePanel) {
+        if (c == Characters.ASSASSIN) return new Assassin(gamePanel);
+        if (c == Characters.WIZARD) return new Wizard(gamePanel);
 
         else return null;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
+
+    @Override
+    public void draw(Graphics2D g2D) {
+        g2D.drawImage(texture, (int) pos.x, (int) pos.y, (int) size.x, (int) size.y, null);
+        g2D.drawString("Health: " + stats.health, (int) pos.x, (int) (pos.y - 10));
+
+    }
+
+    public abstract void active(PlayableEntity target);
+
+    public abstract void passive(PlayableEntity target);
 }

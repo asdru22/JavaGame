@@ -11,7 +11,7 @@ public class PlayerParty {
 
     private static final int MAX_PARTY_SIZE = 4;
 
-    public List<PlayableEntity> party = new ArrayList<>();
+    public List<PlayableEntity> characters = new ArrayList<>();
     public int turn = 0;
 
     public Game game = null;
@@ -23,13 +23,13 @@ public class PlayerParty {
     }
 
     public void addCharacter(PlayableEntity e) {
-        if (party.size() != MAX_PARTY_SIZE) party.add(e);
+        if (characters.size() != MAX_PARTY_SIZE) characters.add(e);
     }
 
 
     public void initialize(Game game) {
         this.game = game;
-        party.get(0).isOwnTurn = true;
+        characters.get(0).isOwnTurn = true;
 
         Vector2D[] defaultPositions = {
                 new Vector2D(-20, -75),
@@ -38,8 +38,8 @@ public class PlayerParty {
                 new Vector2D(20, 75)
         };
 
-        for (int i = 0; i < party.size(); i++) {
-            PlayableEntity e = party.get(i);
+        for (int i = 0; i < characters.size(); i++) {
+            PlayableEntity e = characters.get(i);
             if (i < defaultPositions.length) initializeCharacter(e, defaultPositions[i]);
             else initializeCharacter(e, new Vector2D());
         }
@@ -53,30 +53,43 @@ public class PlayerParty {
     }
 
     public void update() {
-        for (PlayableEntity c : party) {
+        for (PlayableEntity c : characters) {
             c.update();
         }
     }
 
     public void draw(Graphics2D g2D) {
-        for (PlayableEntity c : party) {
+        for (PlayableEntity c : characters) {
             c.draw(g2D);
         }
     }
 
     public void nextTurn() {
-        party.get(turn).isOwnTurn = false;
+        PlayableEntity c = characters.get(turn);
+        c.isOwnTurn = false;
+
+        int aliveCharacters = 0;
+        for(PlayableEntity e : characters){
+            if(e.isAlive()) aliveCharacters++;
+        }
+
         turn++;
-        if (turn < party.size()) {
-            party.get(turn).isOwnTurn = true;
+        if (turn < aliveCharacters) {
+            // go to next player if current one is dead
+            if(!c.isAlive()) {
+                c.isOwnTurn = false;
+                nextTurn();
+            } else {
+                c.isOwnTurn = true;
+            }
         } else {
-            // If party turn is over, give control to other party;
-            game.turn = (game.turn + 1) % 2;
+            // If characters turn is over, give control to other characters;
+            game.nextTurn();
             turn = 0;
         }
     }
 
     public PlayableEntity getActiveCharacter() {
-        return party.get(turn);
+        return characters.get(turn);
     }
 }

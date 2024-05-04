@@ -14,6 +14,7 @@ public abstract class Entity extends Rect {
     public GamePanel gamePanel;
     public BufferedImage texture;
     public Stats stats;
+    private boolean alive = true;
 
     Entity(Vector2D pos, GamePanel gamePanel, String texturePath,Stats stats) {
         super(pos);
@@ -47,5 +48,10 @@ public abstract class Entity extends Rect {
 
     public abstract void onLeftClick(Vector2D pos);
 
-
+    public boolean isAlive(){
+        return alive;
+    }
+    public void setDead(){
+        alive = false;
+    }
 }
