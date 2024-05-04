@@ -15,13 +15,18 @@ public abstract class Effect {
         this.level = level;
     }
 
+    public Effect(Playable owner, int duration) {
+        this.duration = duration;
+        this.owner = owner;
+        this.level = 0;
+    }
+
     public abstract void effect();
 
     public abstract void expire();
 
     public void tick(Iterator<Effect> effect) {
         effect();
-        System.out.println(this);
         duration--;
         if (duration == 0) {
             expire();

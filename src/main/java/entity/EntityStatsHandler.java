@@ -54,7 +54,6 @@ public abstract class EntityStatsHandler extends PlayableEntity {
             effect = iterator.next();
             if(Objects.equals(e,effect)){
                 iterator.remove();
-                System.out.println("effect removed");
             }
         }
     }
