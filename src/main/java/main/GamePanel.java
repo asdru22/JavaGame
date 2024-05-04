@@ -18,6 +18,9 @@ public class GamePanel extends JPanel implements Runnable {
     final int screenHeight = tileSize * screenRows;
     final int FPS = 60;
 
+    boolean isPaused = false;
+    int pauseTime = 0;
+
     Thread gameThread;
     public InputHandler inputHandler = new InputHandler();
     public Game game = new Game(this);
@@ -56,9 +59,9 @@ public class GamePanel extends JPanel implements Runnable {
             lastTime = currentTime;
 
             if (delta >= 1) {
-                mainLoop();
-                delta--;
-                drawCount++;
+                    mainLoop();
+                    delta--;
+                    drawCount++;
             }
 
             if (timer >= 10e8) {
@@ -80,18 +83,21 @@ public class GamePanel extends JPanel implements Runnable {
         game.draw(g2D);
         g2D.dispose();
     }
-    public void mainLoop(){
+
+    public void mainLoop() {
         // update information
         update();
         // draw the screen with updated information
         repaint();
     }
 
-    public int getWidth(){
+    public int getWidth() {
         return screenWidth;
     }
-    public int getHeight(){
+
+    public int getHeight() {
         return screenHeight;
     }
+
 
 }

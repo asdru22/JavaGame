@@ -45,7 +45,7 @@ public abstract class Entity extends Rect {
         }
     }
 
-    public abstract void onLeftClick();
+    public abstract void onLeftClick(Vector2D pos);
 
 
 }
