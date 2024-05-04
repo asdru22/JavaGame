@@ -1,6 +1,7 @@
 package io;
 
 import entity.Entity;
+import entity.PlayableEntity;
 import utils.Vector2D;
 
 import java.awt.event.MouseEvent;
@@ -21,9 +22,9 @@ public class MouseListenerHandler implements MouseListener {
     @Override
     public void mouseReleased(MouseEvent e) {
         updatePressedButtons(e,false);
-        for(Entity enemy : gamePanel.sceneEntities.enemies){
-            if(enemy.contains(new Vector2D(e.getX(),e.getY()))){
-                if(e.getButton()==MouseEvent.BUTTON1)enemy.onLeftClick();
+        for(PlayableEntity c : gamePanel.game.playerParty[gamePanel.game.turn].characters){
+            if(c.contains(new Vector2D(e.getX(),e.getY()))){
+                if(e.getButton()==MouseEvent.BUTTON1)c.onLeftClick();
             }
         }
     }

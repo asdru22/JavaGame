@@ -12,8 +12,8 @@ public abstract class MovableEntity extends Entity {
         this.speed = speed;
     }
 
-    MovableEntity(Vector2D pos, GamePanel gamePanel, int speed, String texturePath) {
-        super(pos, gamePanel,texturePath);
+    MovableEntity(Vector2D pos, GamePanel gamePanel, int speed, String texturePath, Stats stats) {
+        super(pos, gamePanel,texturePath,stats);
         this.speed = speed;
     }
 

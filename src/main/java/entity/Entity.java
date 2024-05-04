@@ -11,15 +11,16 @@ import java.io.IOException;
 import java.util.Objects;
 
 public abstract class Entity extends Rect {
-
     public GamePanel gamePanel;
     public BufferedImage texture;
+    public Stats stats;
 
-    Entity(Vector2D pos, GamePanel gamePanel, String texturePath) {
+    Entity(Vector2D pos, GamePanel gamePanel, String texturePath,Stats stats) {
         super(pos);
         this.gamePanel = gamePanel;
         setTexture(texturePath);
         this.center = new Vector2D(pos.x + size.x / 2, pos.y + size.y / 2);
+        this.stats = stats;
     }
 
     Entity(Vector2D pos, Vector2D size, GamePanel gamePanel) {
@@ -45,4 +46,6 @@ public abstract class Entity extends Rect {
     }
 
     public abstract void onLeftClick();
+
+
 }

@@ -1,10 +1,6 @@
 package main;
 
-import entity.Enemy;
-
-import entity.SceneEntities;
 import io.InputHandler;
-import utils.Vector2D;
 
 import javax.swing.JPanel;
 import java.awt.*;
@@ -24,8 +20,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     Thread gameThread;
     public InputHandler inputHandler = new InputHandler();
-
-    public SceneEntities sceneEntities;
+    public Game game = new Game(this);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -36,9 +31,6 @@ public class GamePanel extends JPanel implements Runnable {
         this.addMouseMotionListener(inputHandler.mousePosHandler);
         this.addMouseListener(inputHandler.mouseListenerHandler);
 
-        this.sceneEntities = new SceneEntities(this);
-
-        populate();
     }
 
     public void startGameThread() {
@@ -78,14 +70,14 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        sceneEntities.update();
+        game.update();
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
-        sceneEntities.draw(g2D);
+        game.draw(g2D);
         g2D.dispose();
     }
     public void mainLoop(){
@@ -93,13 +85,6 @@ public class GamePanel extends JPanel implements Runnable {
         update();
         // draw the screen with updated information
         repaint();
-    }
-    private void populate(){
-        addEnemy(new Enemy(this,new Vector2D().randomize(this)));
-    }
-
-    public void addEnemy(Enemy e){
-        sceneEntities.enemies.add(e);
     }
 
     public int getWidth(){
@@ -109,7 +94,4 @@ public class GamePanel extends JPanel implements Runnable {
         return screenHeight;
     }
 
-    public void stopThread() {
-        gameThread.interrupt();
-    }
 }
