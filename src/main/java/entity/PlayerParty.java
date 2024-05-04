@@ -3,28 +3,37 @@ package entity;
 import utils.Vector2D;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerParty {
 
-    public PlayableEntity[] characters;
+    private static final int MAX_PARTY_SIZE = 4;
+
+    public List<PlayableEntity> party = new ArrayList<>();
     public int turn = 0;
 
     public Vector2D pos;
 
-    public PlayerParty(Vector2D pos, PlayableEntity[] playableEntities){
-        this.characters = playableEntities;
+    public PlayerParty(Vector2D pos){
+
         this.pos = pos;
 
-        initializeCharacters();
     }
 
-    private void initializeCharacters(){
-        initializeCharacter(characters[0], new Vector2D(-20,-75));
-        initializeCharacter(characters[1], new Vector2D(20,-25));
-        initializeCharacter(characters[2], new Vector2D(-20,25));
-        initializeCharacter(characters[3], new Vector2D(20,75));
+    public void addCharacter(PlayableEntity e){
+        if(party.size()==MAX_PARTY_SIZE) return;
+        party.add(e);
+        }
 
-        System.out.println("current pos: "+characters[0].pos);
+
+    public void initializeCharacters(){
+        initializeCharacter(party.get(0), new Vector2D(-20,-75));
+        initializeCharacter(party.get(1), new Vector2D(20,-25));
+        initializeCharacter(party.get(2), new Vector2D(-20,25));
+        initializeCharacter(party.get(3), new Vector2D(20,75));
+
+        System.out.println("current pos: "+party.get(0).pos);
 
     }
 
@@ -38,13 +47,13 @@ public class PlayerParty {
     }
 
     public void update(){
-        for(PlayableEntity c : characters){
+        for(PlayableEntity c : party){
             if(c!=null) c.update();
         }
     }
 
     public void draw(Graphics2D g2D){
-        for(PlayableEntity c : characters){
+        for(PlayableEntity c : party){
             if(c!=null) c.draw(g2D);
         }
     }
@@ -52,7 +61,7 @@ public class PlayerParty {
     public void nextTurn(){
         do{
             turn+=1;
-        } while (characters[turn] == null);
+        } while (party.get(turn) == null);
 
     }
 }

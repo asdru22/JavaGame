@@ -22,7 +22,7 @@ public class MouseListenerHandler implements MouseListener {
     @Override
     public void mouseReleased(MouseEvent e) {
         updatePressedButtons(e,false);
-        for(PlayableEntity c : gamePanel.game.playerParty[gamePanel.game.turn].characters){
+        for(PlayableEntity c : gamePanel.game.playerParty[gamePanel.game.turn].party){
             if(c.contains(new Vector2D(e.getX(),e.getY()))){
                 if(e.getButton()==MouseEvent.BUTTON1)c.onLeftClick();
             }
