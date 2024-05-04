@@ -18,15 +18,9 @@ public class GamePanel extends JPanel implements Runnable {
     final int screenHeight = tileSize * screenRows;
     final int TARGET_FPS = 60;
     private int FPS = TARGET_FPS;
-
-    boolean isPaused = false;
-    int pauseTime = 0;
-
     Thread gameThread;
     public InputHandler inputHandler = new InputHandler();
     public Game game = new Game(this);
-
-    JLabel fps = new JLabel();
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -60,7 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
             timer += (currentTime - lastTime);
             lastTime = currentTime;
 
-            if (delta >= 1 && game.winner==-1) {
+            if (delta >= 1 ) {
                 mainLoop();
                 delta--;
                 drawCount++;

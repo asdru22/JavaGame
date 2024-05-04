@@ -69,64 +69,50 @@ public class PlayerParty {
         // Old player handling
         PlayableEntity oldTurn = characters.get(turn);
         oldTurn.isOwnTurn = false;
+        turn++;
         turnCore();
     }
 
-    public void startTurn() {
-        isOwnTurn = true;
-        turn = 0;
-        int alive = getAliveCharacters();
-        if (alive == 0) {
-            int w = getOther();
-            game.winner = w;
-            System.out.println("Party " + w + " has won!");
-        } else {
-            if (turn < alive) {
-                handleCharacters(alive);
-            } else {
-                game.nextTurn();
-            }
-        }
-    }
-
     private void turnCore() {
-        int aliveCharacters = getAliveCharacters();
-        if (aliveCharacters == 0) {
-            int w = getOther();
-            game.winner = w;
-            System.out.println("Party " + w + " has won!");
-        } else {
-            turn++;
-            if (turn < aliveCharacters) {
-                handleCharacters(aliveCharacters);
-            } else {
-                game.nextTurn();
-            }
+        System.out.println("> Party: " + game.turn + ", turn:" + turn);
+        PlayableEntity e = getNextAliveCharacter();
+        if (e != null) e.isOwnTurn = true;
+        else {
+            System.out.println("next turn");
+            game.nextTurn();
+            turn = 0;
         }
+        System.out.println("< Party: " + game.turn + ", turn:" + turn);
     }
 
-    private void handleCharacters(int alive) {
-        PlayableEntity newTurn;
-        for (int i = 0; i < alive; i++) {
-            newTurn = characters.get(turn);
-            if (newTurn.isAlive()) {
-                newTurn.isOwnTurn = true;
-                System.out.println("Party:" + game.turn + ", character" + turn);
-                break;
-            }
-        }
-    }
 
-    private int getOther() {
+    public int getOther() {
         int n = game.turn;
         return (n + 1) % 2;
     }
 
-    public int getAliveCharacters() {
-        int aliveCharacters = 0;
-        for (PlayableEntity e : characters) {
-            if (e.isAlive()) aliveCharacters++;
+    public PlayableEntity getNextAliveCharacter() {
+        while (turn < characters.size()) {
+            PlayableEntity character = characters.get(turn);
+            if (character.isAlive()) {
+                return character;
+            }
+            turn++;
         }
-        return aliveCharacters;
+        return null;
     }
+
+    public void startTurn() {
+        turn = 0;
+        turnCore();
+    }
+
+    public int getAliveCharacters(){
+        int alive = 0;
+        for (PlayableEntity e : characters){
+            if(e.isAlive()) alive++;
+        }
+        return alive;
+    }
+
 }

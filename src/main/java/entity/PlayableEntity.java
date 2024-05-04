@@ -40,7 +40,7 @@ public abstract class PlayableEntity extends MovableEntity {
 
     @Override
     public void onLeftClick(Vector2D pos) {
-        if(isAlive()) {
+        if (isAlive()) {
             PlayableEntity executor = gamePanel.game.getActiveParty().getActiveCharacter();
             if (party.characters.contains(executor)) executor.passive(this);
             else executor.active(this);
@@ -71,15 +71,15 @@ public abstract class PlayableEntity extends MovableEntity {
     @Override
     public void draw(Graphics2D g2D) {
         g2D.drawImage(texture, (int) pos.x, (int) pos.y, (int) size.x, (int) size.y, null);
-        drawCenteredString(g2D,("Health: "+stats.health),-40);
-        if(isOwnTurn) drawCenteredString(g2D,("----"),25);
+        drawCenteredString(g2D, ("Health: " + stats.health), -40);
+        if (isOwnTurn) drawCenteredString(g2D, ("----"), 25);
     }
 
     public abstract void active(PlayableEntity target);
 
     public abstract void passive(PlayableEntity target);
 
-    private void drawCenteredString(Graphics2D g2D, String text,int verticalOffset) {
+    private void drawCenteredString(Graphics2D g2D, String text, int verticalOffset) {
         if (text == null || text.isEmpty()) {
             return;
         }
@@ -90,7 +90,7 @@ public abstract class PlayableEntity extends MovableEntity {
         int stringHeight = fm.getAscent();
 
         int x = (int) (pos.x + (size.x - stringWidth) / 2);
-        int y = (int) (pos.y + (size.y - stringHeight) / 2 + stringHeight)+ verticalOffset;
+        int y = (int) (pos.y + (size.y - stringHeight) / 2 + stringHeight) + verticalOffset;
 
         g2D.drawString(text, x, y);
     }

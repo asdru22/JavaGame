@@ -28,5 +28,10 @@ public abstract class entityStatsHandler extends PlayableEntity {
         stats.health = 0;
         this.setDead();
         System.out.println("dead");
+
+        PlayerParty p = gamePanel.game.getActiveParty();
+        if(p.getAliveCharacters()==0){
+            gamePanel.game.setWinner(p.getOther());
+        }
     }
 }

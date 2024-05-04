@@ -51,12 +51,17 @@ public class Game {
         playerParty[turn].startTurn();
     }
 
-    public PlayerParty getActiveParty(){
+    public PlayerParty getActiveParty() {
         return playerParty[turn];
     }
 
-    public void nextTurn(){
+    public void nextTurn() {
         turn = (turn + 1) % 2;
         playerParty[turn].startTurn();
+    }
+
+    public void setWinner(int p) {
+        System.out.println(p + " wins!");
+        winner = p;
     }
 }
