@@ -1,22 +1,23 @@
 package entity.characters;
 
-import entity.PlayableEntity;
+import entity.Playable;
 import entity.Stats;
-import entity.entityStatsHandler;
+import entity.effects.Regeneration;
 import main.GamePanel;
 
-public class Wizard extends entityStatsHandler {
+public class Wizard extends Playable {
     public Wizard(GamePanel gamePanel) {
-        super(gamePanel, "wizard", new Stats(10,10));
+        super(gamePanel, "wizard", new Stats(
+                10, 10, 0));
     }
 
     @Override
-    public void active(PlayableEntity target) {
-        dealDamage((entityStatsHandler) target);
+    public void active(Playable target) {
+        dealDamage(target);
     }
 
     @Override
-    public void passive(PlayableEntity target) {
-        heal((entityStatsHandler) target,6);
+    public void passive(Playable target) {
+        applyEffect(new Regeneration(target, 4, 10));
     }
 }

@@ -1,5 +1,6 @@
 package main;
 
+import entity.Playable;
 import entity.PlayableEntity;
 import entity.PlayerParty;
 import utils.Vector2D;
@@ -31,9 +32,9 @@ public class Game {
     private void populate() {
 
         Vector2D screenCenter = new Vector2D((double) gamePanel.getWidth() / 2, (double) gamePanel.getHeight() / 2);
-        PlayableEntity p1 = PlayableEntity.getCharacter(PlayableEntity.Characters.ASSASSIN, gamePanel);
-        PlayableEntity p2 = PlayableEntity.getCharacter(PlayableEntity.Characters.WIZARD, gamePanel);
-        PlayableEntity p3 = PlayableEntity.getCharacter(PlayableEntity.Characters.WIZARD, gamePanel);
+        Playable p1 = Playable.getCharacter(PlayableEntity.Characters.ASSASSIN, gamePanel);
+        Playable p2 = Playable.getCharacter(PlayableEntity.Characters.ASSASSIN, gamePanel);
+        Playable p3 = Playable.getCharacter(PlayableEntity.Characters.WIZARD, gamePanel);
 
         playerParty[0] = new PlayerParty(new Vector2D(screenCenter.x - 100, screenCenter.y));
         playerParty[0].addCharacter(p1);

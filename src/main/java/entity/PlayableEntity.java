@@ -42,8 +42,8 @@ public abstract class PlayableEntity extends MovableEntity {
     public void onLeftClick(Vector2D pos) {
         if (isAlive()) {
             PlayableEntity executor = gamePanel.game.getActiveParty().getActiveCharacter();
-            if (party.characters.contains(executor)) executor.passive(this);
-            else executor.active(this);
+            if (party.characters.contains(executor)) executor.passive((Playable) this);
+            else executor.active((Playable) this);
             gamePanel.game.getActiveParty().nextTurn();
         }
     }
@@ -57,7 +57,7 @@ public abstract class PlayableEntity extends MovableEntity {
         ASSASSIN, WIZARD
     }
 
-    public static PlayableEntity getCharacter(Characters c, GamePanel gamePanel) {
+    public static Playable getCharacter(Characters c, GamePanel gamePanel) {
         if (c == Characters.ASSASSIN) return new Assassin(gamePanel);
         if (c == Characters.WIZARD) return new Wizard(gamePanel);
 
@@ -75,9 +75,9 @@ public abstract class PlayableEntity extends MovableEntity {
         if (isOwnTurn) drawCenteredString(g2D, ("----"), 25);
     }
 
-    public abstract void active(PlayableEntity target);
+    public abstract void active(Playable target);
 
-    public abstract void passive(PlayableEntity target);
+    public abstract void passive(Playable target);
 
     private void drawCenteredString(Graphics2D g2D, String text, int verticalOffset) {
         if (text == null || text.isEmpty()) {

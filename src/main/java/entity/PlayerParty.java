@@ -10,7 +10,7 @@ import java.util.List;
 public class PlayerParty {
 
     private static final int MAX_PARTY_SIZE = 4;
-    public List<PlayableEntity> characters = new ArrayList<>();
+    public List<Playable> characters = new ArrayList<>();
     public int turn = 0;
     public Game game = null;
     public Vector2D pos;
@@ -20,7 +20,7 @@ public class PlayerParty {
         this.pos = pos;
     }
 
-    public void addCharacter(PlayableEntity e) {
+    public void addCharacter(Playable e) {
         if (characters.size() != MAX_PARTY_SIZE) characters.add(e);
     }
 
@@ -61,30 +61,35 @@ public class PlayerParty {
         }
     }
 
-    public PlayableEntity getActiveCharacter() {
+    public Playable getActiveCharacter() {
         return characters.get(turn);
     }
 
     public void nextTurn() {
         // Old player handling
-        PlayableEntity oldTurn = characters.get(turn);
+        Playable oldTurn = characters.get(turn);
         oldTurn.isOwnTurn = false;
         turn++;
         turnCore();
     }
 
     private void turnCore() {
-        System.out.println("> Party: " + game.turn + ", turn:" + turn);
-        PlayableEntity e = getNextAliveCharacter();
-        if (e != null) e.isOwnTurn = true;
-        else {
-            System.out.println("next turn");
-            game.nextTurn();
-            turn = 0;
+        int alive = getAliveCharacters();
+        if (alive != 0) {
+            PlayableEntity e = getNextAliveCharacter();
+            if (e != null) e.isOwnTurn = true;
+            else {
+                game.nextTurn();
+                turn = 0;
+                // Update effects
+                for (Playable p : characters) {
+                    if (!p.getEffects().isEmpty()) p.effectTick();
+                }
+            }
+        } else {
+            game.setWinner(getOther());
         }
-        System.out.println("< Party: " + game.turn + ", turn:" + turn);
     }
-
 
     public int getOther() {
         int n = game.turn;
@@ -107,12 +112,11 @@ public class PlayerParty {
         turnCore();
     }
 
-    public int getAliveCharacters(){
+    public int getAliveCharacters() {
         int alive = 0;
-        for (PlayableEntity e : characters){
-            if(e.isAlive()) alive++;
+        for (PlayableEntity e : characters) {
+            if (e.isAlive()) alive++;
         }
         return alive;
     }
-
 }

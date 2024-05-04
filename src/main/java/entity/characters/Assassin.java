@@ -1,22 +1,23 @@
 package entity.characters;
 
-import entity.PlayableEntity;
+import entity.Playable;
 import entity.Stats;
-import entity.entityStatsHandler;
+import entity.effects.Resistance;
 import main.GamePanel;
 
-public class Assassin extends entityStatsHandler {
+public class Assassin extends Playable {
     public Assassin(GamePanel gamePanel) {
-        super(gamePanel, "assassin", new Stats(50,7));
+        super(gamePanel, "assassin", new Stats(
+                100, 90, 0));
     }
 
     @Override
-    public void active(PlayableEntity target) {
-        dealDamage((entityStatsHandler) target);
+    public void active(Playable target) {
+        dealDamage(target);
     }
 
     @Override
-    public void passive(PlayableEntity target) {
-        System.out.println("passive");
+    public void passive(Playable target) {
+        applyEffect(new Resistance(target, 2, 10));
     }
 }
