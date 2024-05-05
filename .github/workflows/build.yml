@@ -1,3 +1,5 @@
+name: Build jar
+
 on:
   push:
     branches: [ "main" ]
@@ -20,5 +22,5 @@ jobs:
       - run: mkdir staging && cp target/*.jar staging
       - uses: actions/upload-artifact@v4
         with:
-          name: Package
+          name: Runnable Jar
           path: staging
