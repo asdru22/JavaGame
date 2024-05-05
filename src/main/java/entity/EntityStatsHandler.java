@@ -151,13 +151,14 @@ public abstract class EntityStatsHandler extends PlayableEntity {
 
     public void onHitEffects(EntityStatsHandler target){
         if(target.hasEffect("Thorns")){
-            int damage = target.getEffect("Thorns").level;
-            receiveDamage(damage);
+            // attacker receives 20% of dealt damage per level
+            double multiplier = target.getEffect("Thorns").level*0.01;
+            receiveDamage((int) (multiplier*stats.damage));
         }    
-    };
+    }
 
     public void whenHitEffects(){
 
-    };
+    }
 
 }

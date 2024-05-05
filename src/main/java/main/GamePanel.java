@@ -22,6 +22,8 @@ public class GamePanel extends JPanel implements Runnable {
     public int gameState;
     final int playState = 1;
     final int pauseState = 2;
+    final int finishedState = 3;
+
 
     private Thread gameThread;
     public InputHandler inputHandler = new InputHandler();
@@ -116,10 +118,14 @@ public class GamePanel extends JPanel implements Runnable {
     public void resume(){
         gameState = playState;
     }
-
+    public void setFinished(){
+        gameState = finishedState;
+    }
     public boolean isPaused(){
         return gameState == pauseState;
     }
-
+    public boolean isFinished(){
+        return gameState == finishedState;
+    }
 
 }

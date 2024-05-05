@@ -13,7 +13,8 @@ public class Stats {
         this.defense = defense;
     }
     public String getHealth(){
-        return "Health: "+health+"/"+maxHealth;
+        if(health>=1) return "Health: "+health+"/"+maxHealth;
+        else return "Dead";
     }
     public String getOthers(){
         return "Damage: "+damage+", Defense: "+ defense;

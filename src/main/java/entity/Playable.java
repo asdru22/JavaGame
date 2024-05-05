@@ -39,4 +39,9 @@ public abstract class Playable extends EntityStatsHandler {
         if(!getEffects().isEmpty()) r+="\n"+effectsToString();
         return r;
     }
+
+    public static Playable getCharacter(AvailableCharacters c, GamePanel gamePanel) {
+        return c.getFactory().createPlayable(gamePanel);
+    }
+
 }
