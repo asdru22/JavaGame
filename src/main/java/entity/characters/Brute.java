@@ -11,8 +11,8 @@ public class Brute extends Playable {
         super(gamePanel, "brute", new Stats(
                 70, 5, 5));
 
-        active = "Slam";
-        passive = "Charge";
+        active = new Ability("Slam","Deal "+stats.damage+" damage to the target. At full charge will deal 500% more damage");
+        passive = new Ability("Charge","Charge own attack");
     }
 
     @Override

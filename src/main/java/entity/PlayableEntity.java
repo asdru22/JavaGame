@@ -103,4 +103,11 @@ public abstract class PlayableEntity extends MovableEntity {
 
         g2D.drawString(text, x, y);
     }
+
+    public PlayerParty getParty() {
+        return party;
+    }
+    public void setParty(PlayerParty party){
+        this.party = party;
+    }
 }

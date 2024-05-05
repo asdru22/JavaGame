@@ -39,7 +39,7 @@ public class Information {
 
             // Fill black background
             g2D.setColor(new Color(0, 0, 0, 200));
-            g2D.fillRect(x, y, (int)(textWidth*1.1), (int)(textHeight*1.1));
+            g2D.fillRect(x, y, textWidth+10, textHeight+10);
 
             // Set color back to white for text
             g2D.setColor(Color.WHITE);

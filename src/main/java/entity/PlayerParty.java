@@ -53,6 +53,7 @@ public class PlayerParty {
         p.party = this;
         p.originalPosition = new Vector2D(p.pos);
         p.updateCenter();
+        p.setParty(this);
     }
 
     public void update() {
