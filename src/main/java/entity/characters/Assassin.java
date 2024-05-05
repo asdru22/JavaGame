@@ -2,7 +2,7 @@ package entity.characters;
 
 import entity.Playable;
 import entity.Stats;
-import entity.effects.Resistance;
+import Effects.effects.Resistance;
 import main.GamePanel;
 
 public class Assassin extends Playable {
@@ -22,7 +22,7 @@ public class Assassin extends Playable {
 
     @Override
     public void passive(Playable target) {
-        applyEffect(new Resistance(target, 2, 10));
+        applyEffect(new Resistance(target, 3, 10));
     }
 
 

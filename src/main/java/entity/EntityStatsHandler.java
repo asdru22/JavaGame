@@ -1,5 +1,6 @@
 package entity;
 
+import Effects.Effect;
 import main.GamePanel;
 
 import java.util.ArrayList;
@@ -49,6 +50,7 @@ public abstract class EntityStatsHandler extends PlayableEntity {
         Playable o = e.owner;
         if (o.hasEffect(e)) o.removeEffect(e);
         o.getEffects().add(e);
+        e.apply();
     }
 
     public void removeEffect(Effect e) {
@@ -58,6 +60,7 @@ public abstract class EntityStatsHandler extends PlayableEntity {
             effect = iterator.next();
             if (Objects.equals(e, effect)) {
                 iterator.remove();
+                e.expire();
             }
         }
     }

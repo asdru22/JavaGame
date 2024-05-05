@@ -1,6 +1,6 @@
-package entity.effects;
+package Effects.effects;
 
-import entity.Effect;
+import Effects.Effect;
 import entity.Playable;
 
 public class Resistance extends Effect {
@@ -9,12 +9,16 @@ public class Resistance extends Effect {
     }
 
     @Override
+    public void apply() {
+        owner.stats.defense += level;
+    }
+
+    @Override
     public void effect() {
-        //owner.stats.defense += level;
     }
 
     @Override
     public void expire() {
-        //owner.stats.defense -= level;
+        owner.stats.defense -= level;
     }
 }

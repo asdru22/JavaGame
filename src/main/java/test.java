@@ -26,8 +26,5 @@ public class test {
         int targetY = 150; // Target y-coordinate
         int amount = 5; // Amount to move towards the target point
 
-        moveTowardsPoint(rectangle, targetX, targetY, amount);
-
-        System.out.println("New Rectangle Position: " + rectangle);
-    }
+        moveTowardsPoint(rectangle, targetX, targetY, amount);}
 }

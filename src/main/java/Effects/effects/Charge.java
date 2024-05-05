@@ -1,12 +1,12 @@
-package entity.effects;
+package Effects.effects;
 
-import entity.Effect;
+import Effects.InfiniteEffect;
 import entity.Playable;
 
-public class Charge extends Effect {
+public class Charge extends InfiniteEffect {
     int charge = 1;
     public Charge(Playable owner) {
-        super(owner, 999);
+        super(owner);
     }
 
     public void increase(){
@@ -16,6 +16,11 @@ public class Charge extends Effect {
 
     public int get(){
         return charge;
+    }
+
+    @Override
+    public void apply() {
+
     }
 
     @Override

@@ -2,7 +2,7 @@ package entity.characters;
 
 import entity.Playable;
 import entity.Stats;
-import entity.effects.Regeneration;
+import Effects.effects.Regeneration;
 import main.GamePanel;
 
 public class Wizard extends Playable {

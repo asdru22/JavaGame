@@ -1,7 +1,8 @@
-package entity;
+package Effects;
+
+import entity.Playable;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Objects;
 
 public abstract class Effect {
@@ -21,17 +22,20 @@ public abstract class Effect {
         this.level = 0;
     }
 
+    public abstract void apply();
     public abstract void effect();
-
     public abstract void expire();
 
     public void tick(Iterator<Effect> effect) {
         effect();
-        duration--;
-        if (duration == 0) {
-            expire();
-            effect.remove();
+        if(!(this instanceof InfiniteEffect)){
+            duration--;
+            if (duration == 0) {
+                expire();
+                effect.remove();
+            }
         }
+
     }
 
     @Override
