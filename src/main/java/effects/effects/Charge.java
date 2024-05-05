@@ -1,6 +1,6 @@
-package Effects.effects;
+package effects.effects;
 
-import Effects.InfiniteEffect;
+import effects.InfiniteEffect;
 import entity.Playable;
 
 public class Charge extends InfiniteEffect {

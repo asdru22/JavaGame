@@ -2,7 +2,7 @@ package entity.characters;
 
 import entity.Playable;
 import entity.Stats;
-import Effects.effects.Charge;
+import effects.effects.Charge;
 import main.GamePanel;
 
 public class Brute extends Playable {

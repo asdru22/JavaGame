@@ -1,7 +1,6 @@
 package entity.characters;
 
-import Effects.effects.Resistance;
-import Effects.effects.Thorns;
+import effects.effects.Thorns;
 import entity.Playable;
 import entity.Stats;
 import main.GamePanel;

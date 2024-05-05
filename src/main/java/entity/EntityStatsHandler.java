@@ -1,6 +1,6 @@
 package entity;
 
-import Effects.Effect;
+import effects.Effect;
 import main.GamePanel;
 
 import java.util.ArrayList;

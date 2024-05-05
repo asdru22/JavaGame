@@ -2,7 +2,7 @@ package entity.characters;
 
 import entity.Playable;
 import entity.Stats;
-import Effects.effects.Regeneration;
+import effects.effects.Regeneration;
 import main.GamePanel;
 
 import java.util.List;

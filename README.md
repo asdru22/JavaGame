@@ -2,11 +2,7 @@
 
 ### Running the jar
 
-Run jar (Java 21+ ONLY) with
-
-```
-java -cp JavaGame-1.0-SNAPSHOT.jar main.Main
-```
+In order to run the jar JAVA 21+ IS REQUIRED  
 
 ### Playing
 

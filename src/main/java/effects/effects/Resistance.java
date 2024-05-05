@@ -1,6 +1,6 @@
-package Effects.effects;
+package effects.effects;
 
-import Effects.Effect;
+import effects.Effect;
 import entity.Playable;
 
 public class Resistance extends Effect {
