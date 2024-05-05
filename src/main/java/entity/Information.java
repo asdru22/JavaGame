@@ -34,11 +34,11 @@ public class Information {
             }
 
             // Calculate position to center text
-            int x = (gamePanel.getWidth() - textWidth) / 2;
-            int y = (gamePanel.getHeight() - textHeight) / 2;
+            int x = (int) ((playable.pos.x) );
+            int y = (int) ((playable.pos.y) );
 
             // Fill black background
-            g2D.setColor(Color.BLACK);
+            g2D.setColor(new Color(0, 0, 0, 200));
             g2D.fillRect(x, y, (int)(textWidth*1.1), (int)(textHeight*1.1));
 
             // Set color back to white for text

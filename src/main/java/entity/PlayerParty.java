@@ -1,11 +1,13 @@
 package entity;
 
 import main.Game;
+import main.GamePanel;
 import utils.Vector2D;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class PlayerParty {
 
@@ -16,8 +18,12 @@ public class PlayerParty {
     public Vector2D pos;
     boolean isOwnTurn = false;
 
-    public PlayerParty(Vector2D pos) {
+    private final GamePanel gamePanel;
+
+    public PlayerParty(Vector2D pos,GamePanel gamePanel) {
         this.pos = pos;
+        this.gamePanel = gamePanel;
+
     }
 
     public void addCharacter(Playable e) {
@@ -28,10 +34,10 @@ public class PlayerParty {
         this.game = game;
 
         Vector2D[] defaultPositions = {
-                new Vector2D(-20, -75),
-                new Vector2D(20, -25),
-                new Vector2D(-20, 25),
-                new Vector2D(20, 75)
+                new Vector2D(0, -160),
+                new Vector2D(0, -80),
+                new Vector2D(0, 0),
+                new Vector2D(0, 80)
         };
 
         for (int i = 0; i < characters.size(); i++) {
@@ -69,6 +75,7 @@ public class PlayerParty {
         // Old player handling
         Playable oldTurn = characters.get(turn);
         oldTurn.isOwnTurn = false;
+        oldTurn.pos = new Vector2D(oldTurn.originalPosition);
         turn++;
         turnCore();
     }
@@ -77,8 +84,11 @@ public class PlayerParty {
         int alive = getAliveCharacters();
         if (alive != 0) {
             PlayableEntity e = getNextAliveCharacter();
-            if (e != null) e.isOwnTurn = true;
-            else {
+            if (e != null) {
+                e.isOwnTurn = true;
+                Vector2D center = new Vector2D((double) gamePanel.getWidth() /2,pos.y);
+                e.moveHorizontallyTowards(center,70);
+            } else {
                 game.nextTurn();
                 turn = 0;
                 // Update effects

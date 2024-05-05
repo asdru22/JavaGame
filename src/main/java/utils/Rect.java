@@ -59,4 +59,19 @@ public abstract class Rect {
         center.x = (pos.x + size.x) / 2;
         center.y = (pos.y + size.y) / 2;
     }
+
+    public void moveHorizontallyTowards(Vector2D target,int amount) {
+        double dx = target.x - pos.x;
+
+        // Calculate the direction of movement (left or right)
+        int direction = dx > 0 ? 1 : -1;
+
+        if (Math.abs(dx) > amount) {
+            pos.x += amount * direction; // Move at maximum speed towards the target
+        } else {
+            pos.x += dx;
+        }
+        updateCenter();
+    }
+
 }

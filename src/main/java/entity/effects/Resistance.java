@@ -10,11 +10,11 @@ public class Resistance extends Effect {
 
     @Override
     public void effect() {
-        owner.stats.defense += level;
+        //owner.stats.defense += level;
     }
 
     @Override
     public void expire() {
-        owner.stats.defense -= level;
+        //owner.stats.defense -= level;
     }
 }

@@ -1,44 +1,33 @@
-// Java Program to add a image and string
-// to a label with horizontal alignment
+import java.awt.Rectangle;
 
+public class test {
 
-import javax.swing.*;
+    public static void moveTowardsPoint(Rectangle rect, int targetX, int targetY, int amount) {
+        int currentX = rect.x;
+        int currentY = rect.y;
 
-class test extends JFrame {
+        // Calculate distance between current position and target point
+        int dx = targetX - currentX;
+        int dy = targetY - currentY;
 
-    // frame
-    static JFrame f;
+        // Calculate angle and move rectangle towards the target point along the x-axis
+        double angle = Math.atan2(dy, dx);
+        int newX = currentX + (int) (Math.cos(angle) * amount);
+        int newY = currentY + (int) (Math.sin(angle) * amount);
 
-    // label to display text
-    static JLabel l;
-
-    // default constructor
-    test() {
+        // Update rectangle position
+        rect.setLocation(newX, newY);
     }
 
-    // main class
+    // Example usage:
     public static void main(String[] args) {
-        // create a new frame to store text field and button
-        f = new JFrame("label");
+        Rectangle rectangle = new Rectangle(50, 50, 50, 50); // Initial position of the rectangle
+        int targetX = 200; // Target x-coordinate
+        int targetY = 150; // Target y-coordinate
+        int amount = 5; // Amount to move towards the target point
 
-        // create a new image icon
-        ImageIcon i = new ImageIcon("f:/image.png");
+        moveTowardsPoint(rectangle, targetX, targetY, amount);
 
-        // create a label to display text and image
-        l = new JLabel("new image text ", i, SwingConstants.HORIZONTAL);
-
-        // create a panel
-        JPanel p = new JPanel();
-
-        // add label to panel
-        p.add(l);
-
-        // add panel to frame
-        f.add(p);
-
-        // set the size of frame
-        f.setSize(600, 500);
-
-        f.show();
+        System.out.println("New Rectangle Position: " + rectangle);
     }
 }

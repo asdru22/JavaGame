@@ -22,13 +22,11 @@ public abstract class MovableEntity extends Entity {
             // Calculate the direction vector towards the target entity
             Vector2D direction = new Vector2D(target.pos.x - pos.x, target.pos.y - pos.y);
             direction.normalize();
-            // Set the velocity vector based on the normalized direction and speed
+
             velocity.x = direction.x * speed;
             velocity.y = direction.y * speed;
-            // Update the position based on the velocity
             pos.x += velocity.x;
             pos.y += velocity.y;
-
         } else {
             this.velocity = new Vector2D();
             onCollision(target);

@@ -19,6 +19,10 @@ public abstract class EntityStatsHandler extends PlayableEntity {
         target.receiveDamage(stats.damage);
     }
 
+    public void dealDamage(EntityStatsHandler target, int amount) {
+        target.receiveDamage(amount);
+    }
+
     public void receiveDamage(int damage) {
         damage = Math.max(0, damage - stats.defense);
         stats.health -= damage;
@@ -43,27 +47,65 @@ public abstract class EntityStatsHandler extends PlayableEntity {
 
     public static void applyEffect(Effect e) {
         Playable o = e.owner;
-        if(o.hasEffect(e)) o.removeEffect(e);
+        if (o.hasEffect(e)) o.removeEffect(e);
         o.getEffects().add(e);
     }
 
-    public void removeEffect(Effect e){
+    public void removeEffect(Effect e) {
         Effect effect;
         Iterator<Effect> iterator = activeEffects.iterator();
         while (iterator.hasNext()) {
             effect = iterator.next();
-            if(Objects.equals(e,effect)){
+            if (Objects.equals(e, effect)) {
                 iterator.remove();
             }
         }
     }
 
-    public boolean hasEffect(Effect e){
-        List<Effect> effects = e.owner.getEffects();
-        for(Effect effect : effects){
-            if(Objects.equals(effect.getName(), e.getName())) return true;
+    public boolean hasEffect(Effect e) {
+        List<Effect> effects = getEffects();
+        for (Effect effect : effects) {
+            if (Objects.equals(effect.getName(), e.getName())) return true;
         }
         return false;
+    }
+
+    public boolean hasEffect(String id) {
+        List<Effect> effects = getEffects();
+        for (Effect effect : effects) {
+            if (Objects.equals(effect.getName(), id)) return true;
+        }
+        return false;
+    }
+
+    public int getEffectLevel(Effect e) {
+        List<Effect> effects = getEffects();
+        if (hasEffect(e)) {
+            for (Effect effect : effects) {
+                if (Objects.equals(effect.getName(), e.getName())) return e.level;
+            }
+        }
+        return -1;
+    }
+
+    public int getEffectLevel(String id) {
+        List<Effect> effects = getEffects();
+        if (hasEffect(id)) {
+            for (Effect effect : effects) {
+                if (Objects.equals(effect.getName(), id)) return effect.level;
+            }
+        }
+        return -1;
+    }
+
+    public int getEffectDuration(Effect e) {
+        List<Effect> effects = getEffects();
+        if (hasEffect(e)) {
+            for (Effect effect : effects) {
+                if (Objects.equals(effect.getName(), e.getName())) return e.duration;
+            }
+        }
+        return -1;
     }
 
     public List<Effect> getEffects() {
@@ -72,7 +114,7 @@ public abstract class EntityStatsHandler extends PlayableEntity {
 
     public String effectsToString() {
         StringBuilder r = new StringBuilder("Effects:\n");
-        for(Effect e : activeEffects){
+        for (Effect e : activeEffects) {
             r.append(e).append("\n");
         }
         return r.toString();
@@ -85,5 +127,15 @@ public abstract class EntityStatsHandler extends PlayableEntity {
             e = iterator.next();
             e.tick(iterator);
         }
+    }
+
+    public Effect getEffect(String id) {
+        List<Effect> effects = getEffects();
+        if (hasEffect(id)) {
+            for (Effect effect : effects) {
+                if (Objects.equals(effect.getName(), id)) return effect;
+            }
+        }
+        return null;
     }
 }

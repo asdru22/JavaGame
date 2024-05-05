@@ -8,7 +8,7 @@ import main.GamePanel;
 public class Wizard extends Playable {
     public Wizard(GamePanel gamePanel) {
         super(gamePanel, "wizard", new Stats(
-                10, 10, 0));
+                40, 15, 0));
         active = "Zap";
         passive = "Heal";
     }

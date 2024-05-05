@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable {
     public InputHandler inputHandler = new InputHandler();
     public Information information = new Information();
 
-    public Game game = new Game(this);
+    public Game game;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -37,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(inputHandler.keyHandler);
         this.addMouseMotionListener(inputHandler.mousePosHandler);
         this.addMouseListener(inputHandler.mouseListenerHandler);
-
+        game = new Game(this);
         gameState = playState;
     }
 
@@ -90,7 +90,7 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2D = (Graphics2D) g;
         game.draw(g2D);
         g2D.drawString("FPS: " + FPS, 0, 10);
-        g2D.drawString("Turn: " + game.turn, screenWidth / 2, screenHeight / 2 - 100);
+        g2D.drawString("Turn: " + game.turn, screenWidth / 2, screenHeight / 2 - 200);
         information.draw(g2D);
         g2D.dispose();
     }

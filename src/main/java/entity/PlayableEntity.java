@@ -1,6 +1,7 @@
 package entity;
 
 import entity.characters.Assassin;
+import entity.characters.Brute;
 import entity.characters.Wizard;
 import main.GamePanel;
 import utils.Rect;
@@ -17,7 +18,7 @@ public abstract class PlayableEntity extends MovableEntity {
     private String name;
 
     public PlayableEntity(PlayableEntity playableEntity, String pathName, Stats stats) {
-        super(playableEntity.pos, playableEntity.gamePanel, 4, pathName, stats);
+        super(playableEntity.pos, playableEntity.gamePanel, 10, pathName, stats);
         this.gamePanel = playableEntity.gamePanel;
         this.pos = new Vector2D(playableEntity.pos);
         this.name = pathName;
@@ -25,7 +26,7 @@ public abstract class PlayableEntity extends MovableEntity {
     }
 
     public PlayableEntity(GamePanel gamePanel, String pathName, Stats stats) {
-        super(new Vector2D(), gamePanel, 4, pathName, stats);
+        super(new Vector2D(), gamePanel, 20, pathName, stats);
         this.name = pathName;
     }
 
@@ -60,25 +61,27 @@ public abstract class PlayableEntity extends MovableEntity {
     }
 
     public enum Characters {
-        ASSASSIN, WIZARD
+        ASSASSIN, WIZARD, BRUTE
     }
 
     public static Playable getCharacter(Characters c, GamePanel gamePanel) {
         if (c == Characters.ASSASSIN) return new Assassin(gamePanel);
-        if (c == Characters.WIZARD) return new Wizard(gamePanel);
+        else if (c == Characters.WIZARD) return new Wizard(gamePanel);
+        else if (c == Characters.BRUTE) return new Brute(gamePanel);
 
         else return null;
     }
 
     public String getName() {
-        return name;
+        return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+
     }
 
     @Override
     public void draw(Graphics2D g2D) {
         g2D.drawImage(texture, (int) pos.x, (int) pos.y, (int) size.x, (int) size.y, null);
         drawCenteredString(g2D, ("Health: " + stats.health), -40);
-        if (isOwnTurn) drawCenteredString(g2D, ("----"), 25);
+        if (isOwnTurn) drawCenteredString(g2D, ("--------"), 25);
     }
 
     public abstract void active(Playable target);

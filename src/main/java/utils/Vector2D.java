@@ -76,7 +76,7 @@ public class Vector2D {
     public Vector2D randomize(GamePanel gamePanel){
         Random random = new Random();
         this.x = random.nextInt(gamePanel.getWidth() + 1);
-        this.y = random.nextInt(gamePanel.getWidth() + 1);
+        this.y = random.nextInt(gamePanel.getHeight() + 1);
         return this;
     }
 }

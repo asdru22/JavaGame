@@ -35,14 +35,25 @@ public class Game {
         Playable p1 = Playable.getCharacter(PlayableEntity.Characters.ASSASSIN, gamePanel);
         Playable p2 = Playable.getCharacter(PlayableEntity.Characters.ASSASSIN, gamePanel);
         Playable p3 = Playable.getCharacter(PlayableEntity.Characters.WIZARD, gamePanel);
+        Playable p4 = Playable.getCharacter(PlayableEntity.Characters.BRUTE, gamePanel);
 
-        playerParty[0] = new PlayerParty(new Vector2D(screenCenter.x - 100, screenCenter.y));
+        playerParty[0] = new PlayerParty(new Vector2D(screenCenter.x - 150, screenCenter.y),gamePanel);
         playerParty[0].addCharacter(p1);
+        playerParty[0].addCharacter(p2);
+        playerParty[0].addCharacter(p3);
+        playerParty[0].addCharacter(p4);
+
         playerParty[0].initialize(this);
 
-        playerParty[1] = new PlayerParty(new Vector2D(screenCenter.x + 100, screenCenter.y));
-        playerParty[1].addCharacter(p2);
-        playerParty[1].addCharacter(p3);
+        Playable p5 = Playable.getCharacter(PlayableEntity.Characters.WIZARD, gamePanel);
+        Playable p6 = Playable.getCharacter(PlayableEntity.Characters.ASSASSIN, gamePanel);
+        Playable p7 = Playable.getCharacter(PlayableEntity.Characters.BRUTE, gamePanel);
+        Playable p8 = Playable.getCharacter(PlayableEntity.Characters.ASSASSIN, gamePanel);
+        playerParty[1] = new PlayerParty(new Vector2D(screenCenter.x + 150, screenCenter.y),gamePanel);
+        playerParty[1].addCharacter(p5);
+        playerParty[1].addCharacter(p6);
+        playerParty[1].addCharacter(p7);
+        playerParty[1].addCharacter(p8);
 
         playerParty[1].initialize(this);
 
