@@ -22,7 +22,7 @@
                     <archive>
                         <manifest>
                             <mainClass>
-                                your main class
+                                main.Main
                             </mainClass>
                         </manifest>
                     </archive>

@@ -10,7 +10,6 @@ public class Main {
         window.setResizable(false);
         window.setTitle("Game");
 
-
         window.add(gamePanel);
         window.pack();
 

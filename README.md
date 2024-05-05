@@ -11,4 +11,5 @@ java -cp JavaGame-1.0-SNAPSHOT.jar main.Main
 ### Playing
 
 The game has two parties (0, to the left and 1, to the right).  
-Every character has an active ability that triggers when clicking members of the opposing party. Passive abilities are triggered when clicking characters of your own party.
+Every character has an active ability that triggers when *left clicking* members of the opposing party. Passive abilities are triggered when clicking characters of your own party.  
+Hold *right click* over a character to see their stats.

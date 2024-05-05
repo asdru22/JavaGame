@@ -1,6 +1,5 @@
 package utils;
 
-import java.awt.*;
 
 public abstract class Rect {
     public Vector2D pos;

@@ -17,14 +17,20 @@ public abstract class EntityStatsHandler extends PlayableEntity {
     }
 
     public void dealDamage(EntityStatsHandler target) {
+        if(!target.getEffects().isEmpty()) onHitEffects(target);  
+
         target.receiveDamage(stats.damage);
     }
 
     public void dealDamage(EntityStatsHandler target, int amount) {
+        if(!target.getEffects().isEmpty()) onHitEffects(target);  
+
         target.receiveDamage(amount);
     }
 
     public void receiveDamage(int damage) {
+        if(!getEffects().isEmpty()) whenHitEffects();
+
         damage = Math.max(0, damage - stats.defense);
         stats.health -= damage;
         if (stats.health <= 0) {
@@ -44,6 +50,7 @@ public abstract class EntityStatsHandler extends PlayableEntity {
     public void onDeath() {
         stats.health = 0;
         this.setDead();
+        this.getEffects().clear();
     }
 
     public static void applyEffect(Effect e) {
@@ -141,4 +148,16 @@ public abstract class EntityStatsHandler extends PlayableEntity {
         }
         return null;
     }
+
+    public void onHitEffects(EntityStatsHandler target){
+        if(target.hasEffect("Thorns")){
+            int damage = target.getEffect("Thorns").level;
+            receiveDamage(damage);
+        }    
+    };
+
+    public void whenHitEffects(){
+
+    };
+
 }
