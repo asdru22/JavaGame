@@ -1,8 +1,11 @@
 # JavaGame
 
-### Running the jar
-
-In order to run the jar JAVA 21+ IS REQUIRED  
+### Install and run the jar
+1. Go to [Actions](https://github.com/asdru22/JavaGame/actions)   
+2. Click on the latest **workflow run**
+3. Scroll to the bottom of the page and click on **Runnable Jar**
+4. Unzip the downloaded folder
+5. Double click the jar, JAVA 21+ IS REQUIRED 
 
 ### Playing
 
