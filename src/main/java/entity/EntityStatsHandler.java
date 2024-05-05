@@ -116,9 +116,9 @@ public abstract class EntityStatsHandler extends PlayableEntity {
     }
 
     public String effectsToString() {
-        StringBuilder r = new StringBuilder("Effects:\n");
+        StringBuilder r = new StringBuilder("Active Effects:\n");
         for (Effect e : activeEffects) {
-            r.append(e).append("\n");
+            r.append("- ").append(e).append("\n");
         }
         return r.toString();
     }

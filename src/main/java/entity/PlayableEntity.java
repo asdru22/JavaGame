@@ -43,14 +43,29 @@ public abstract class PlayableEntity extends MovableEntity {
     public void onLeftClick(Vector2D pos) {
         if (isAlive()) {
             PlayableEntity executor = gamePanel.game.getActiveParty().getActiveCharacter();
-            if (party.characters.contains(executor)) executor.passive((Playable) this);
-            else executor.active((Playable) this);
+            if (party.characters.contains(executor)) {
+                executor.passive((Playable) this);
+                executor.logPassive();
+            } else {
+                executor.active((Playable) this);
+                executor.logActive();
+            }
             gamePanel.game.getActiveParty().nextTurn();
         }
     }
 
+    private void logActive() {
+        Playable p = (Playable) this;
+        System.out.println(p.getName() + " used " + p.active.getName()+"!");
+    }
+
+    private void logPassive() {
+        Playable p = (Playable) this;
+        System.out.println(p.getName() + " used " + p.passive.getName()+"!");
+    }
+
     @Override
-    public void onRightClick(Vector2D pos){
+    public void onRightClick(Vector2D pos) {
         gamePanel.pause();
         gamePanel.information.playable = (Playable) this;
     }
@@ -107,7 +122,8 @@ public abstract class PlayableEntity extends MovableEntity {
     public PlayerParty getParty() {
         return party;
     }
-    public void setParty(PlayerParty party){
+
+    public void setParty(PlayerParty party) {
         this.party = party;
     }
 }

@@ -36,8 +36,7 @@ public abstract class Playable extends EntityStatsHandler {
         r+= stats.getOthers()+"\n\n";
         r+="A> "+ active+"\n";
         r+="P> "+passive+"\n";
-        r+=effectsToString();
-
+        if(!getEffects().isEmpty()) r+="\n"+effectsToString();
         return r;
     }
 }
