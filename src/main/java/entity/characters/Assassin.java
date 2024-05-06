@@ -9,7 +9,7 @@ public class Assassin extends Playable {
 
     public Assassin(GamePanel gamePanel) {
         super(gamePanel, "assassin", new Stats(
-                50, 4, 0));
+                55, 4, 0));
 
         active = new Ability("Stab","Deal "+stats.damage+" damage x3 to the target");
         passive = new Ability("Shield","Apply Resistance (5) for 3 turns to the target");

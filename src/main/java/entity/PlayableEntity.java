@@ -91,8 +91,22 @@ public abstract class PlayableEntity extends MovableEntity {
     }
 
     public String getName() {
-        return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+        StringBuilder result = new StringBuilder();
+        boolean makeUpper = true;
 
+        for (char c : name.toCharArray()) {
+            if (c == '_') {
+                result.append(' '); // Replace underscore with space
+                makeUpper = true;
+            } else if (makeUpper) {
+                result.append(Character.toUpperCase(c));
+                makeUpper = false;
+            } else {
+                result.append(Character.toLowerCase(c));
+            }
+        }
+
+        return result.toString();
     }
 
     @Override

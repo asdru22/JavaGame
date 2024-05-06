@@ -5,7 +5,9 @@ public enum AvailableCharacters {
     ASSASSIN(new AssassinFactory()),
     WIZARD(new WizardFactory()),
     BRUTE(new BruteFactory()),
-    SPIKE(new SpikeFactory());
+    SPIKE(new SpikeFactory()),
+    SNAKEOILSALESMAN(new SnakeOilSalesmanFactory());
+
 
     private final PlayableFactory factory;
 

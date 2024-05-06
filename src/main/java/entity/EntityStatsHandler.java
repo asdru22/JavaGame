@@ -49,8 +49,7 @@ public abstract class EntityStatsHandler extends PlayableEntity {
 
     public void onDeath() {
         stats.health = 0;
-        this.setDead();
-        this.getEffects().clear();
+        setDead();
     }
 
     public static void applyEffect(Effect e) {
@@ -150,15 +149,21 @@ public abstract class EntityStatsHandler extends PlayableEntity {
     }
 
     public void onHitEffects(EntityStatsHandler target){
+        // thorns
         if(target.hasEffect("Thorns")){
-            // attacker receives 20% of dealt damage per level
+            // attacker receives 1% of dealt damage per level
             double multiplier = target.getEffect("Thorns").level*0.01;
             receiveDamage((int) (multiplier*stats.damage));
-        }    
+        }
+
     }
 
     public void whenHitEffects(){
 
+    }
+
+    public double getHealthPercentage(){
+        return stats.health*100.0/stats.maxHealth;
     }
 
 }

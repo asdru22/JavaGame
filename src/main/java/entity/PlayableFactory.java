@@ -1,9 +1,6 @@
 package entity;
 
-import entity.characters.Assassin;
-import entity.characters.Brute;
-import entity.characters.Spike;
-import entity.characters.Wizard;
+import entity.characters.*;
 import main.GamePanel;
 
 // Define the PlayableFactory interface
@@ -40,3 +37,9 @@ class SpikeFactory implements PlayableFactory {
     }
 }
 
+class SnakeOilSalesmanFactory implements PlayableFactory {
+    @Override
+    public Playable createPlayable(GamePanel gamePanel) {
+        return new SnakeOilSalesman(gamePanel);
+    }
+}

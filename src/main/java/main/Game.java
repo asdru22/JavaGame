@@ -32,17 +32,17 @@ public class Game {
         Vector2D screenCenter = new Vector2D((double) gamePanel.getWidth() / 2, (double) gamePanel.getHeight() / 2);
 
         playerParty[0] = new PlayerParty(new Vector2D(screenCenter.x - 150, screenCenter.y),gamePanel);
-        playerParty[0].addCharacter(Playable.getCharacter(AvailableCharacters.ASSASSIN,gamePanel));
-        //playerParty[0].addCharacter(Playable.getCharacter(AvailableCharacters.SPIKE,gamePanel));
-        //playerParty[0].addCharacter(Playable.getCharacter(AvailableCharacters.WIZARD,gamePanel));
-        //playerParty[0].addCharacter(Playable.getCharacter(AvailableCharacters.BRUTE,gamePanel));
+        playerParty[0].addCharacter(Playable.get(AvailableCharacters.ASSASSIN,gamePanel));
+        playerParty[0].addCharacter(Playable.get(AvailableCharacters.SPIKE,gamePanel));
+        playerParty[0].addCharacter(Playable.get(AvailableCharacters.WIZARD,gamePanel));
+        playerParty[0].addCharacter(Playable.get(AvailableCharacters.BRUTE,gamePanel));
         playerParty[0].initialize(this);
 
         playerParty[1] = new PlayerParty(new Vector2D(screenCenter.x + 150, screenCenter.y),gamePanel);
-        playerParty[1].addCharacter(Playable.getCharacter(AvailableCharacters.ASSASSIN,gamePanel));
-        //playerParty[1].addCharacter(Playable.getCharacter(AvailableCharacters.SPIKE,gamePanel));
-        //playerParty[1].addCharacter(Playable.getCharacter(AvailableCharacters.WIZARD,gamePanel));
-        //playerParty[1].addCharacter(Playable.getCharacter(AvailableCharacters.BRUTE,gamePanel));
+        playerParty[1].addCharacter(Playable.get(AvailableCharacters.ASSASSIN,gamePanel));
+        playerParty[1].addCharacter(Playable.get(AvailableCharacters.SPIKE,gamePanel));
+        playerParty[1].addCharacter(Playable.get(AvailableCharacters.SNAKEOILSALESMAN,gamePanel));
+        playerParty[1].addCharacter(Playable.get(AvailableCharacters.BRUTE,gamePanel));
         playerParty[1].initialize(this);
 
         // 50% chance for each party to start

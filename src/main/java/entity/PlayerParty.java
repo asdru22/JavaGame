@@ -7,6 +7,7 @@ import utils.Vector2D;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class PlayerParty {
@@ -20,7 +21,7 @@ public class PlayerParty {
 
     private final GamePanel gamePanel;
 
-    public PlayerParty(Vector2D pos,GamePanel gamePanel) {
+    public PlayerParty(Vector2D pos, GamePanel gamePanel) {
         this.pos = pos;
         this.gamePanel = gamePanel;
 
@@ -87,14 +88,19 @@ public class PlayerParty {
             PlayableEntity e = getNextAliveCharacter();
             if (e != null) {
                 e.isOwnTurn = true;
-                Vector2D center = new Vector2D((double) gamePanel.getWidth() /2,pos.y);
-                e.moveHorizontallyTowards(center,70);
+                Vector2D center = new Vector2D((double) gamePanel.getWidth() / 2, pos.y);
+                e.moveHorizontallyTowards(center, 70);
             } else {
                 game.nextTurn();
                 turn = 0;
                 // Update effects
                 for (Playable p : characters) {
-                    if (!p.getEffects().isEmpty()) p.effectTick();
+                    if (!p.getEffects().isEmpty()) {
+                        p.effectTick();
+                        if (!p.isAlive()) {
+                            p.getEffects().clear();
+                        }
+                    }
                 }
             }
         } else {
@@ -129,5 +135,12 @@ public class PlayerParty {
             if (e.isAlive()) alive++;
         }
         return alive;
+    }
+
+    public boolean hasCharacter(String name) {
+        for (Playable p : characters) {
+            if (Objects.equals(p.getName(), name)) return true;
+        }
+        return false;
     }
 }

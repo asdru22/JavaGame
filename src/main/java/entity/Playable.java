@@ -40,7 +40,7 @@ public abstract class Playable extends EntityStatsHandler {
         return r;
     }
 
-    public static Playable getCharacter(AvailableCharacters c, GamePanel gamePanel) {
+    public static Playable get(AvailableCharacters c, GamePanel gamePanel) {
         return c.getFactory().createPlayable(gamePanel);
     }
 
