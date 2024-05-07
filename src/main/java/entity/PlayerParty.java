@@ -17,7 +17,6 @@ public class PlayerParty {
     public int turn = 0;
     public Game game = null;
     public Vector2D pos;
-    boolean isOwnTurn = false;
 
     private final GamePanel gamePanel;
 
@@ -42,25 +41,24 @@ public class PlayerParty {
         };
 
         for (int i = 0; i < characters.size(); i++) {
-            PlayableEntity e = characters.get(i);
+            Playable e = characters.get(i);
             if (i < defaultPositions.length) initializeCharacter(e, defaultPositions[i]);
             else initializeCharacter(e, new Vector2D());
         }
     }
 
-    private void initializeCharacter(PlayableEntity p, Vector2D offset) {
+    private void initializeCharacter(Playable p, Vector2D offset) {
         p.pos = new Vector2D(pos);
         p.pos.add(offset);
         p.party = this;
         p.originalPosition = new Vector2D(p.pos);
         p.updateCenter();
         p.setParty(this);
-        Playable pl = (Playable) p;
-        pl.setupEffects();
+        p.setupEffects();
     }
 
     public void update() {
-        for (PlayableEntity c : characters) {
+        for (Playable c : characters) {
             c.update();
         }
     }
@@ -151,5 +149,4 @@ public class PlayerParty {
         }
         return false;
     }
-
 }
