@@ -31,4 +31,9 @@ public class Spike extends Playable {
     public void passive(Playable target) {
         applyEffect(new Thorns(target, 3, 100));
     }
+
+    @Override
+    public void deathEffect() {
+
+    }
 }

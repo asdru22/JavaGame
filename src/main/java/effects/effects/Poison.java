@@ -5,7 +5,7 @@ import entity.Playable;
 
 public class Poison extends Effect {
     public Poison(Playable owner, int duration, int level) {
-        super(owner, duration, level);
+        super(owner, duration, level,false);
     }
 
     @Override

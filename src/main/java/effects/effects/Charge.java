@@ -6,7 +6,7 @@ import entity.Playable;
 public class Charge extends InfiniteEffect {
     int charge = 1;
     public Charge(Playable owner) {
-        super(owner);
+        super(owner,true);
     }
 
     public void increase(){

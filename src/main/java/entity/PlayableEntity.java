@@ -77,18 +77,6 @@ public abstract class PlayableEntity extends MovableEntity {
 
     }
 
-    public enum Characters {
-        ASSASSIN, WIZARD, BRUTE,SPIKE
-    }
-
-    public static Playable getCharacter(Characters c, GamePanel gamePanel) {
-        if (c == Characters.ASSASSIN) return new Assassin(gamePanel);
-        else if (c == Characters.WIZARD) return new Wizard(gamePanel);
-        else if (c == Characters.BRUTE) return new Brute(gamePanel);
-        else if (c == Characters.SPIKE) return new Spike(gamePanel);
-
-        else return null;
-    }
 
     public String getName() {
         StringBuilder result = new StringBuilder();
@@ -158,4 +146,7 @@ public abstract class PlayableEntity extends MovableEntity {
             return c.get(n+1);
         } else return null;
     }
+
+    public abstract void deathEffect();
+
 }

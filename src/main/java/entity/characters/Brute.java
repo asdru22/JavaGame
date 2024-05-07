@@ -38,4 +38,9 @@ public class Brute extends Playable {
             c.increase();
         } else applyEffect(new Charge(receiver));
     }
+
+    @Override
+    public void deathEffect() {
+
+    }
 }

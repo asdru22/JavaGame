@@ -3,6 +3,11 @@ package entity;
 import main.GamePanel;
 
 public abstract class Playable extends EntityStatsHandler {
+
+    public Ability active;
+    public Ability passive;
+    public String info = null;
+
     public static class Ability {
         String name;
         String description;
@@ -22,8 +27,7 @@ public abstract class Playable extends EntityStatsHandler {
             return name;
         }
     }
-    public Ability active;
-    public Ability passive;
+
 
 
     public Playable(GamePanel gamePanel, String pathName, Stats stats) {
@@ -36,6 +40,7 @@ public abstract class Playable extends EntityStatsHandler {
         r+= stats.getOthers()+"\n\n";
         r+="A> "+ active+"\n";
         r+="P> "+passive+"\n";
+        if(info!=null) r+= "E> "+ info+"\n";
         if(!getEffects().isEmpty()) r+="\n"+effectsToString();
         return r;
     }
@@ -43,5 +48,12 @@ public abstract class Playable extends EntityStatsHandler {
     public static Playable get(AvailableCharacters c, GamePanel gamePanel) {
         return c.getFactory().createPlayable(gamePanel);
     }
+
+    public void setupEffects(){
+        if(getParty().hasCharacter("Snake Oil Salesman")){
+            increaseMaxHealth(5);
+        }
+    }
+
 
 }

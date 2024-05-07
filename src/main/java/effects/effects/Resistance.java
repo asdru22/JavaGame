@@ -5,7 +5,7 @@ import entity.Playable;
 
 public class Resistance extends Effect {
     public Resistance(Playable owner, int duration, int level) {
-        super(owner, duration, level);
+        super(owner, duration, level, true);
     }
 
     @Override

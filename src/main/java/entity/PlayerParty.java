@@ -55,6 +55,8 @@ public class PlayerParty {
         p.originalPosition = new Vector2D(p.pos);
         p.updateCenter();
         p.setParty(this);
+        Playable pl = (Playable) p;
+        pl.setupEffects();
     }
 
     public void update() {
@@ -143,4 +145,11 @@ public class PlayerParty {
         }
         return false;
     }
+    public boolean hasAliveCharacter(String name) {
+        for (Playable p : characters) {
+            if (Objects.equals(p.getName(), name)) return p.isAlive();
+        }
+        return false;
+    }
+
 }

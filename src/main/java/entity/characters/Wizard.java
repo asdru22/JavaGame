@@ -29,4 +29,9 @@ public class Wizard extends Playable {
         applyEffect(new Regeneration(target, 4, 10));
     }
 
+    @Override
+    public void deathEffect() {
+
+    }
+
 }

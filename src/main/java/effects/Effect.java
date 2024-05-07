@@ -10,16 +10,20 @@ public abstract class Effect {
     public Playable owner;
     public int level;
 
-    public Effect(Playable owner, int duration, int level) {
+    public boolean positive;
+
+    public Effect(Playable owner, int duration, int level, boolean positive) {
         this.duration = duration;
         this.owner = owner;
         this.level = level;
+        this.positive = positive;
     }
 
-    public Effect(Playable owner, int duration) {
+    public Effect(Playable owner, int duration, boolean positive) {
         this.duration = duration;
         this.owner = owner;
         this.level = 0;
+        this.positive = positive;
     }
 
     public abstract void apply();

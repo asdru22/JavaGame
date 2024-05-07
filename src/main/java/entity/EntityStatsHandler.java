@@ -17,24 +17,25 @@ public abstract class EntityStatsHandler extends PlayableEntity {
     }
 
     public void dealDamage(EntityStatsHandler target) {
-        if(!target.getEffects().isEmpty()) onHitEffects(target);  
+        if (!target.getEffects().isEmpty()) onHitEffects(target);
 
         target.receiveDamage(stats.damage);
     }
 
     public void dealDamage(EntityStatsHandler target, int amount) {
-        if(!target.getEffects().isEmpty()) onHitEffects(target);  
+        if (!target.getEffects().isEmpty()) onHitEffects(target);
 
         target.receiveDamage(amount);
     }
 
     public void receiveDamage(int damage) {
-        if(!getEffects().isEmpty()) whenHitEffects();
+        if (!getEffects().isEmpty()) whenHitEffects();
 
         damage = Math.max(0, damage - stats.defense);
         stats.health -= damage;
         if (stats.health <= 0) {
             onDeath();
+            deathEffect();
         }
     }
 
@@ -50,6 +51,21 @@ public abstract class EntityStatsHandler extends PlayableEntity {
     public void onDeath() {
         stats.health = 0;
         setDead();
+    }
+
+    public void increaseMaxHealth(int amount) {
+        if (stats.health == stats.maxHealth) {
+            stats.maxHealth += amount;
+            stats.health = stats.maxHealth;
+        } else {
+            stats.maxHealth += amount;
+        }
+    }
+
+    public void decreaseMaxHealth(int amount){
+        stats.maxHealth = Math.max(1, stats.maxHealth-amount);
+        stats.health = Math.min(stats.health,stats.maxHealth);
+
     }
 
     public static void applyEffect(Effect e) {
@@ -148,22 +164,22 @@ public abstract class EntityStatsHandler extends PlayableEntity {
         return null;
     }
 
-    public void onHitEffects(EntityStatsHandler target){
+    public void onHitEffects(EntityStatsHandler target) {
         // thorns
-        if(target.hasEffect("Thorns")){
+        if (target.hasEffect("Thorns")) {
             // attacker receives 1% of dealt damage per level
-            double multiplier = target.getEffect("Thorns").level*0.01;
-            receiveDamage((int) (multiplier*stats.damage));
+            double multiplier = target.getEffect("Thorns").level * 0.01;
+            receiveDamage((int) (multiplier * stats.damage));
         }
 
     }
 
-    public void whenHitEffects(){
+    public void whenHitEffects() {
 
     }
 
-    public double getHealthPercentage(){
-        return stats.health*100.0/stats.maxHealth;
+    public double getHealthPercentage() {
+        return stats.health * 100.0 / stats.maxHealth;
     }
 
 }

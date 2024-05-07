@@ -26,4 +26,9 @@ public class Assassin extends Playable {
     public void passive(Playable target) {
         applyEffect(new Resistance(target, 3, 5));
     }
+
+    @Override
+    public void deathEffect() {
+
+    }
 }
