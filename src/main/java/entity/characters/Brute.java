@@ -32,11 +32,10 @@ public class Brute extends Playable {
 
     @Override
     public void passive(Playable target) {
-        Playable receiver = this;
-        if (receiver.hasEffect("Charge")) {
-            Charge c = (Charge) receiver.getEffect("Charge");
+        if (hasEffect("Charge")) {
+            Charge c = (Charge) getEffect("Charge");
             c.increase();
-        } else applyEffect(new Charge(receiver));
+        } else applyEffect(new Charge(this));
     }
 
     @Override

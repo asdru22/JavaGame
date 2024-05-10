@@ -1,6 +1,7 @@
 package entity;
 
 import effects.Effect;
+import entity.characters.Eclipse;
 import main.GamePanel;
 
 import java.util.ArrayList;
@@ -16,10 +17,10 @@ public abstract class EntityStatsHandler extends PlayableEntity {
         super(gamePanel, pathName, stats);
     }
 
-    public void dealDamage(EntityStatsHandler target) {
+    public int dealDamage(EntityStatsHandler target) {
         if (!target.getEffects().isEmpty()) onHitEffects(target);
 
-        target.receiveDamage(stats.damage);
+        return target.receiveDamage(stats.damage);
     }
 
     public void dealDamage(EntityStatsHandler target, int amount) {
@@ -28,7 +29,7 @@ public abstract class EntityStatsHandler extends PlayableEntity {
         target.receiveDamage(amount);
     }
 
-    public void receiveDamage(int damage) {
+    public int receiveDamage(int damage) {
         if (!getEffects().isEmpty()) whenHitEffects();
 
         damage = Math.max(0, damage - stats.defense);
@@ -37,9 +38,13 @@ public abstract class EntityStatsHandler extends PlayableEntity {
             onDeath();
             deathEffect();
         }
+        return damage;
     }
 
     public void heal(EntityStatsHandler target, int amount) {
+        Playable p = (Playable) this;
+        if(Objects.equals(p.getName(), "Eclipse")) return;
+
         target.stats.health += amount;
         if (target.stats.health >= target.stats.maxHealth) target.stats.health = target.stats.maxHealth;
     }
@@ -171,7 +176,11 @@ public abstract class EntityStatsHandler extends PlayableEntity {
             double multiplier = target.getEffect("Thorns").level * 0.01;
             receiveDamage((int) (multiplier * stats.damage));
         }
-
+        // first contact
+        if(hasEffect("FirstContact")){
+            Eclipse e = (Eclipse) this;
+            e.chargeCheck(target);
+        }
     }
 
     public void whenHitEffects() {

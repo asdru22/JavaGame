@@ -34,6 +34,5 @@ public class Spike extends Playable {
 
     @Override
     public void deathEffect() {
-
     }
 }

@@ -43,3 +43,10 @@ class SnakeOilSalesmanFactory implements PlayableFactory {
         return new SnakeOilSalesman(gamePanel);
     }
 }
+
+class EclipseFactory implements PlayableFactory {
+    @Override
+    public Playable createPlayable(GamePanel gamePanel) {
+        return new Eclipse(gamePanel);
+    }
+}
